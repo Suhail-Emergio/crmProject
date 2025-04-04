@@ -1,0 +1,100 @@
+{% extends 'common/admin/common.html' %}
+{% block content %}
+  <div class="settings-container">
+    <div class="settings-header">
+      <h1 class="text-light">Settings</h1>
+      <p>Manage your account preferences</p>
+    </div>
+    <div class="settings-body">
+      <div class="setting-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h3>Username</h3>
+            <p class="setting-value mb-0">{{ user }}</p>
+          </div>
+          <button class="btn btn-change" data-bs-toggle="modal" data-bs-target="#username">Change</button>
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h3>Name</h3>
+            <p class="setting-value mb-0">{{ user.name }}</p>
+          </div>
+          <button class="btn btn-change" data-bs-toggle="modal" data-bs-target="#name">Change</button>
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h3>Password</h3>
+            <p class="setting-value mb-0">••••••••</p>
+          </div>
+          <button class="btn btn-change" data-bs-toggle="modal" data-bs-target="#pass">Change</button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center align-items-center">
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#passwordModal">Delete Account</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="username" tabindex="-1" aria-labelledby="usernameLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-floating mt-2">
+              <input type="text" value="{{ user }}" class="form-control" id="floatingInput" placeholder="" name="username" aria-describedby="floatingInputHelp" required />
+              <label for="floatingInput">Username</label>
+            </div>
+            <button type="submit" name="name" class="btn btn-primary mt-4">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="name" tabindex="-1" aria-labelledby="nameLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-floating mt-2">
+              <input type="text" value="{{ user.name }}" class="form-control" id="floatingInput" placeholder="" name="names" aria-describedby="floatingInputHelp" required />
+              <label for="floatingInput">Name</label>
+            </div>
+            <button type="submit" name="fname" class="btn btn-primary mt-4">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="pass" tabindex="-1" aria-labelledby="passLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-floating mt-2">
+              <input type="text" class="form-control" id="floatingInput" placeholder="" name="password" aria-describedby="floatingInputHelp" required />
+              <label for="floatingInput">Password</label>
+            </div>
+            <button type="submit" name="pass" class="btn btn-primary mt-4">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

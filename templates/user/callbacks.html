@@ -1,0 +1,97 @@
+{% extends 'common/user/common.html' %}
+{% load static %}
+{% block content %}
+  <div class="container d-flex justify-content-between" style="margin-top:1.5em">
+    <h2 style="color: #2b2d42; margin-bottom: 1em;font-weight:600;width:100%">Callbacks</h2>
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Start typing to search..." id="search-input" onkeyup="search()" />
+      <span class="search-icon" style="margin-top: -0.7em;">&#128269;</span>
+    </div>
+  </div>
+  {% if calls %}
+    <div class="container-lg overflow-auto">
+      <table class="table text-center table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Sl no</th>
+            <th scope="col" class="p-4" style="background-color: #006d77;color:#edede9;">Date</th>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Name</th>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Number</th>
+          </tr>
+        </thead>
+        <tbody class="calls-list">
+          {% for i in calls %}
+            <tr class="call" data-date="{{ i.date|date:'Y-m-d' }}">
+              <td scope="row">{{ forloop.counter }}</td>
+              <td class="date-cell">{{ i.date }}</td>
+              <td>
+                <h5>{{ i.duty.lead }}</h5>
+              </td>
+              <td>
+                <h6>{{ i.duty.lead.phone }}</h6>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0) // Set time to beginning of the day
+
+        const calls = document.querySelectorAll('.call')
+        calls.forEach((call) => {
+          const dateStr = call.getAttribute('data-date')
+          const callDate = new Date(dateStr)
+          callDate.setHours(0, 0, 0, 0) // Set time to beginning of the day
+      
+          if (callDate.getTime() === today.getTime()) {
+            call.classList.add('table-danger')
+            const dateCell = call.querySelector('.date-cell')
+            dateCell.innerHTML += ' <span class="badge bg-primary">Today</span>'
+          }
+        })
+      })
+    </script>
+  {% else %}
+    <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+      <h4>No Callbacks</h4>
+    </div>
+  {% endif %}
+  <script>
+    const search = () => {
+      const searchInput = document.getElementById('search-input').value.toUpperCase()
+      console.log(searchInput)
+      const items = document.getElementsByClassName('leads-list')
+      const product = document.querySelectorAll('.lead')
+      const names = document.getElementsByTagName('h5')
+      const numbers = document.getElementsByTagName('h6')
+      if (!isNaN(searchInput)) {
+        for (let i = 0; i < numbers.length; i++) {
+          let match = product[i].getElementsByTagName('h6')[0]
+          if (match) {
+            let tvalue = match.textContent || match.innerHTML
+            if (tvalue.toUpperCase().indexOf(searchInput) > -1) {
+              product[i].style.display = ''
+            } else {
+              product[i].style.display = 'none'
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < names.length; i++) {
+          let match = product[i].getElementsByTagName('h5')[0]
+          if (match) {
+            let tvalue = match.textContent || match.innerHTML
+            if (tvalue.toUpperCase().indexOf(searchInput) > -1) {
+              product[i].style.display = ''
+            } else {
+              product[i].style.display = 'none'
+            }
+          }
+        }
+      }
+    }
+  </script>
+{% endblock %}

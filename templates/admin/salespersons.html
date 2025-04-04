@@ -1,0 +1,145 @@
+{% extends 'common/admin/common.html' %}
+{% block content %}
+<div class="card" style="margin: 3rem 2rem;">
+  <div class="d-flex justify-content-between px-3 align-items-center" style="height: 7em;">
+    <div>
+      <h3 class="card-title fw-bold text-black mb-0">Employees</h3>
+      <p class="text-muted mb-0">
+        Count : <span class="fw-bold">{{ count }}</span>
+      </p>
+    </div>
+    
+  <div class="d-flex gap-2">
+    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+      class="btn btn-primary d-flex align-items-center" data-bs-placement="bottom" title="Add Employee">
+      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
+        <defs>
+          <mask id="letsIconsAddRingDuotoneLine0">
+            <g fill="none" stroke-width="1.2">
+              <circle cx="12" cy="12" r="8.4" stroke="#fff" stroke-opacity=".75" />
+              <path stroke="#fff" stroke-linecap="square" d="M12 15V9m3 3H9" />
+            </g>
+          </mask>
+        </defs>
+        <path fill="#fff" d="M0 0h24v24H0z" mask="url(#letsIconsAddRingDuotoneLine0)" />
+      </svg>
+    </button>
+    <a href="blocked_emp" class="btn btn-primary d-flex align-items-center" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Banned Employees">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dee2e6" class="bi bi-ban" viewBox="0 0 16 16">
+      <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0"/>
+    </svg>
+  </a>
+  </div>
+  </div>
+  {% if person %}
+  <div class="table-responsive text-nowrap">
+    <table class="table table-striped">
+      <thead>
+        <tr class="text-center">
+          <th>Name</th>
+          <th>Phone Number</th>
+          <th>strength</th>
+          <th>Todays Lead</th>
+          <th>Total Lead</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0 text-center leads-list">
+
+        {% for i in person %}
+        <tr class="lead">
+          <td>
+            <h5><strong>{{i.user.name}}</strong></h5>
+          </td>
+          <td><h6>{{i.user.phone}}</h6></td>
+          <td>{{i.strength}}</td>
+          <td>{{i.todays_lead}}</td>
+          <td>{{i.total_lead}}</td>
+          <td class="w-25">
+            <a href="{% url 'duty' i.id %}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View"  class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dee2e6" class="bi bi-eye" viewBox="0 0 16 16">
+                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+              </svg>
+            </a>
+            <a href="{% url 'edit_emp' i.id %}" data-bs-placement="bottom" title="Edit" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+              fill="#dee2e6" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path
+                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                <path fill-rule="evenodd"
+                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+              </svg></a>
+          <a href="{% url "block" i.user.id %}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ban" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dee2e6" class="bi bi-ban" viewBox="0 0 16 16">
+            <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0"/>
+          </svg></a>
+            <a href="{% url 'del_emp' i.id %}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Delete" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+              fill="#dee2e6" class="bi bi-trash" viewBox="0 0 16 16">
+                <path
+                  d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                <path
+                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+              </svg>
+            </a>
+                </td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+    <h4>No Employees</h4>
+  </div>
+  {% endif %}
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="card-title fw-bold text-black mb-0">Employees</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-floating">
+            <input type="tel" pattern="[0-9]{10}" class="form-control" id="floatingInput" placeholder="" name="number"
+              aria-describedby="floatingInputHelp" required />
+            <label for="floatingInput">Mobile Number</label>
+          </div>
+          <div class="form-floating mt-2">
+            <input type="text" class="form-control" id="number" placeholder="" name="name"
+              aria-describedby="floatingInputHelp" required />
+            <label for="floatingInput">Name</label>
+          </div>
+          <div class="form-floating mt-2">
+            <input type="text" class="form-control" id="floatingInput" placeholder="" name="password"
+              aria-describedby="floatingInputHelp" required />
+            <label for="floatingInput">Password</label>
+          </div>
+          <div class="form-floating mt-2">
+            <input type="text" class="form-control" id="floatingInput" placeholder="" name="strength"
+              aria-describedby="floatingInputHelp" required />
+            <label for="floatingInput">Strength</label>
+          </div>
+          <div class="form-floating mt-2">
+            <input type="text" class="form-control" id="floatingInput" placeholder="" name="mon_tar"
+              aria-describedby="floatingInputHelp" required />
+            <label for="floatingInput">Monthly Target</label>
+          </div>
+          <div class="form-floating mt-2">
+            <input type="text" class="form-control" id="floatingInput" placeholder="" name="daily_tar"
+              aria-describedby="floatingInputHelp" required />
+            <label for="floatingInput">Daily Target</label>
+          </div>
+
+
+          <button type="submit" class="btn btn-primary mt-4">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'common/admin/common.html' %}
+ {% block content %}
+<div class="card" style="margin: 3rem 2rem;">
+        <h5 class="card-header">Edit Leads</h5>
+        <form method="post" style="margin: 0 2rem 2rem 2rem;" id="forms" enctype = "multipart/form-data">
+        {% csrf_token %}
+              <div class="form-floating">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="name"
+                          aria-describedby="floatingInputHelp"
+                          value="{{courses.name}}"
+                        />
+                        <label for="floatingInput">Course Name</label>
+              </div>
+              <div class="form-floating mt-2">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="duration"
+                          aria-describedby="floatingInputHelp"
+                          value="{{courses.duration}}"
+                        />
+                        <label for="floatingInput">Course Duration</label>
+              </div>
+              <div class="form-floating mt-2">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="internship"
+                          aria-describedby="floatingInputHelp"
+                          value="{{courses.internship}}"
+                        />
+                        <label for="floatingInput">Internship Duration</label>
+              </div>
+              <div class="form-floating mt-2">
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="rate"
+                          aria-describedby="floatingInputHelp"
+                          value="{{courses.rate}}"
+                        />
+                        <label for="floatingInput">Base Rate</label>
+              </div>
+            <div class="form-floating mt-2">
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="gst"
+                          aria-describedby="floatingInputHelp"
+                          value="{{courses.gst}}"
+                        />
+                        <label for="floatingInput">GST Rate</label>
+              </div>
+            <div class="form-floating mt-3" style="margin-left:0.5em">
+                        <label for="my_checkbox" style="margin-top:-1.2em;">Change Syllabus</label>
+                        <input onclick="add()"
+                          type="checkbox"
+                          id="my_checkbox"
+                          placeholder=""
+                          name="check"
+                          aria-describedby="floatingInputHelp"
+                        />
+              </div>
+            <div class="form-floating mt-2" id="course" style="display:none">
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="syllabus"
+                          aria-describedby="floatingInputHelp"
+                        />
+                <label for="floatingInput">Syllabus</label>
+                        <p><a href="{{ courses.syllabus.url }}" target="_blank">{{ courses.syllabus.name }}</a></p>
+              </div>
+
+              <button type="submit" class="btn btn-primary mt-4">Edit</button>
+          </form>
+</div>
+<script>
+    function add(){
+        var checkbox = document.getElementById("my_checkbox")
+        var x = document.getElementById("course")
+        var form = document.getElementById("forms");
+        if (checkbox.checked) {
+            x.style.display = 'block';
+        }
+        else{
+             x.style.display = 'none';
+        }
+    }
+</script>
+{% endblock %}

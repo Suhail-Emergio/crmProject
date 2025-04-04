@@ -1,0 +1,153 @@
+{% extends 'common/admin/common.html' %}
+{% block content %}
+  <div class="d-flex w-100 justify-content-between">
+    <div class="card" style="margin: 3rem;width: 100%;">
+      <div class="d-flex justify-content-between">
+        <h4 class="card-header">Daily Reports</h4>
+      </div>
+      {% if report %}
+        <div class="table-responsive text-nowrap">
+          <table class="table text-center table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-0 leads-list">
+              {% for i in report %}
+                <tr class="lead">
+                  <td>
+                    <h6 style="margin-top:0.6em">{{ i.created_on }}</h6>
+                  </td>
+                  <td>
+                    <a href="{{ i.csv.url }}" target="_blank" download><button class="btn btn-primary">Download</button></a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+          <h4>No Daily reports</h4>
+        </div>
+      {% endif %}
+    </div>
+    <div class="card" style="margin: 3rem;width: 100%;">
+      <div class="d-flex justify-content-between">
+        <h4 class="card-header">Monthly Won</h4>
+      </div>
+      {% if won %}
+        <div class="table-responsive text-nowrap">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-0 leads-list">
+              {% for i in won %}
+                <tr class="lead">
+                  <td>
+                    <h6 style="margin-top:0.6em">{{ i.created_on }}</h6>
+                  </td>
+                  <td>
+                    <a href="{{ i.csv.url }}" target="_blank" download><button class="btn btn-primary">Download</button></a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+          <h4>No Monthly Wons</h4>
+        </div>
+      {% endif %}
+    </div>
+    <div class="card" style="margin: 3rem;width: 100%;">
+      <div class="d-flex justify-content-between">
+        <h4 class="card-header">Monthly Followup</h4>
+      </div>
+      {% if followup %}
+        <div class="table-responsive text-nowrap">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-0 leads-list">
+              {% for i in followup %}
+                <tr class="lead">
+                  <td>
+                    <h6 style="margin-top:0.6em">{{ i.created_on }}</h6>
+                  </td>
+                  <td>
+                    <a href="{{ i.csv.url }}" target="_blank" download><button class="btn btn-primary">Download</button></a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+          <h4>No Monthly Followup</h4>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between pb-0">
+            <h4>Daily Call Report</h4>
+          </div>
+          <div class="table-responsive text-center text-nowrap p-5">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Saleperson</th>
+                  <th>Total Leads</th>
+                  <th>Followups</th>
+                  <th>Not Answered</th>
+                  <th>Not Interested</th>
+                </tr>
+              </thead>
+              <tbody class="table-border-bottom-0 leads-list">
+                {% if sr %}
+                  {% for i in sr %}
+                    <tr class="lead">
+                      <td>
+                        <h5 style="font-size:12pt;margin-top:0.6em">{{ i.emp }}</h5>
+                      </td>
+                      <td>
+                        <h6>{{ i.total }}</h6>
+                      </td>
+                      <td>{{ i.follow }}</td>
+                      <td>{{ i.Notanswer }}</td>
+                      <td>{{ i.Notinterested }}</td>
+                    </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>No courses yet ...</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

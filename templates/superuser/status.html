@@ -1,0 +1,66 @@
+{% extends 'common/superuser/common.html' %}
+
+{% block title %}
+  Status
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between px-5 pb-3">
+            <h5>Status of {{ name }}</h5>
+            {% if employee %}
+              <h5>Assigned to : {{ employee }}</h5>
+            {% endif %}
+          </div>
+          {% if status %}
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table text-center align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-7">Contacted On</th>
+                      <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-7 ps-2">Progress</th>
+                      <th class="text-center text-uppercase text-dark text-sm font-weight-bolder opacity-7">Status</th>
+                      <th class="text-center text-uppercase text-dark text-sm font-weight-bolder opacity-7">Notes</th>
+                      <th class="text-center text-uppercase text-dark text-sm font-weight-bolder opacity-7">Probability</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in status %}
+                      <tr>
+                        <td>
+                          <div class="px-2 py-1">
+                            <h6 class="">{{ i.contacted_on }}</h6>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-dark mb-0">{{ i.progress }}</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-dark mb-0">{{ i.status }}</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-dark mb-0">{{ i.notes }}</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-dark mb-0">{{ i.probability }}</p>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          {% else %}
+            <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+              <h4>No Status</h4>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

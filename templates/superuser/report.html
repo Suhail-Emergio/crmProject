@@ -1,0 +1,51 @@
+{% extends 'common/superuser/common.html' %}
+
+{% block title %}
+  Report
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between px-5 pb-0">
+            <h5>Reports</h5>
+          </div>
+          {% if admin %}
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table text-center align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-7">Admin</th>
+                      <th class="text-center text-uppercase text-dark text-sm font-weight-bolder opacity-7">Report</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in admin %}
+                      <tr class="lead">
+                        <td>
+                          <div class="px-2 py-1">
+                            <h5 class="text-capitalize">{{ i.user.name }}</h5>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-dark mb-0"><a href="{% url 'view_reports' i.user.id %}" class="btn btn-primary">View reports</a></p>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          {% else %}
+            <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+              <h4>No admins to show reports</h4>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'common/admin/common.html' %}
+ {% block content %}
+<div class="card" style="margin: 3rem 2rem;">
+        <h5 class="card-header">Edit Leads</h5>
+        <form method="post" style="margin: 0 2rem 2rem 2rem;">
+        {% csrf_token %}
+              <div class="form-floating">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="name"
+                          aria-describedby="floatingInputHelp"
+                          value="{{lead.name}}"
+                        />
+                        <label for="floatingInput">Name</label>
+              </div>
+              <div class="form-floating mt-2">
+                        <input
+                          type="tel"
+                          pattern="[0-9]{10}"
+
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="number"
+                          aria-describedby="floatingInputHelp"
+                          value="{{lead.phone}}"
+                        />
+                        <label for="floatingInput">Phone Number</label>
+              </div>
+            <div class="form-floating mt-2">
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="email"
+                          aria-describedby="floatingInputHelp"
+                          value="{{lead.email}}"
+                        />
+                        <label for="floatingInput">Email</label>
+              </div>
+              <div class="form-floating mt-2">
+                        <input
+                          type="tel"
+                          pattern="[0-9]{10}"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="wpno"
+                          aria-describedby="floatingInputHelp"
+                          value="{{lead.watsapp}}"
+                        />
+                        <label for="floatingInput">Whatsapp Number</label>
+              </div>
+              <div class="form-floating mt-2">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="department"
+                          aria-describedby="floatingInputHelp"
+                          value="{{lead.department}}"
+                        />
+                        <label for="floatingInput">Department</label>
+              </div>
+              <button type="submit" class="btn btn-primary mt-4">Edit</button>
+          </form>
+</div>
+{% endblock %}

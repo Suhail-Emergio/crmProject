@@ -1,0 +1,42 @@
+{% extends 'common/user/common.html' %}
+{% load static %}
+{% block content %}
+<div class="container d-flex justify-content-between" id="container_lead" style="margin-top:1.5em">
+    <h2 style="color: #495057; margin-bottom: 1em;font-weight:600;">Syllabus</h2>
+</div>
+
+{% if courses %}
+    <div class="container-lg overflow-auto">
+        <table class="table text-center table-bordered ">
+            <thead>
+            <tr>
+                <th scope="col" class="p-4 " style="background-color: #006d77;color:#edede9;">Sl no</th>
+                <th scope="col" class="p-4 " style=" background-color: #006d77;color:#edede9;">Course</th>
+                <th scope="col" class="p-4 " style=" background-color: #006d77;color:#edede9;">Duration</th>
+                <th scope="col" class="p-4 " style=" background-color: #006d77;color:#edede9;">Fees</th>
+                <th scope="col" class="p-4 " style=" background-color: #006d77;color:#edede9;">Syllabus</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in courses %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{i.name}}</td>
+                <td>Course Duration : {{i.duration}} <br> Internship Duration : {{i.internship}}</td>
+                <td>Base Fees : {{i.rate}} &nbsp; Gst : {{i.gst}}% <br>Total Rate : {{i.total_rate}}</td>
+                <td>    
+                    <a href="{{ i.syllabus.url }}" target="_blank" download class="btn btn-primary">Download</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+    <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+      <h4>No Courses</h4>
+    </div>
+    {% endif %}
+{% endblock %}

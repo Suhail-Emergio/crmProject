@@ -1,0 +1,52 @@
+{% extends 'common/admin/common.html' %}
+{% block content %}
+  <div class="card" style="margin: 3rem 2rem;">
+    <div class="d-flex flex-column px-3 justify-content-center" style="height: 10em;">
+      <h3 class="card-title fw-bold text-black mb-0">Trash</h3>
+      <p class="card-title mt-1 text-black mb-0">These leads have been marked as trash due to disinterest. If these leads need to be recovered or re-engaged, action must be taken.</p>
+    </div>
+    {% if assign %}
+      <div class="table-responsive text-nowrap">
+        <table class="table text-center table-striped">
+          <thead>
+            <tr>
+              <th>Lead</th>
+              <th>Number</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0 leads-list">
+            {% for i in assign %}
+              <tr class="lead">
+                <td>
+                  <h5 style="font-size:12pt;margin-top:0.6em">{{ i.lead.name }}</h5>
+                </td>
+                <td>
+                  <h6>{{ i.lead.phone }}</h6>
+                </td>
+                <td>
+                  <a href="{% url 'recovery' i.lead.id %}" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+                      <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+                    </svg>
+                  </a>
+                  <a href="{% url 'del_lead' i.lead.id %}" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-trash" viewBox="0 0 16 16">
+                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+        <h4>No Details</h4>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

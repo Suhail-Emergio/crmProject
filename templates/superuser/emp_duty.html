@@ -1,0 +1,216 @@
+{% extends 'common/superuser/common.html' %}
+{% block content %}
+  <style>
+    .nav-tabs .nav-link {
+      border: none;
+      color: #354f52;
+      background: #cad2c5;
+      padding-inline: 2em;
+    }
+    .nav-tabs .nav-link.active {
+      background-color: #fff;
+      color: #000;
+    }
+  </style>
+
+  <div class="container-fluid py-4">
+    <ul class="nav nav-tabs mb-4 d-flex justify-content-center gap-1" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="leads-tab" data-bs-toggle="tab" data-bs-target="#leads" type="button" role="tab" aria-controls="leads" aria-selected="true">Leads Assigned</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="daily-tab" data-bs-toggle="tab" data-bs-target="#daily" type="button" role="tab" aria-controls="daily" aria-selected="false">Daily Quality</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="monthly-tab" data-bs-toggle="tab" data-bs-target="#monthly" type="button" role="tab" aria-controls="monthly" aria-selected="false">Monthly Quality</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="leads" role="tabpanel" aria-labelledby="leads-tab">
+        <div class="card">
+          <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0 text-white">Leads Assigned</h3>
+          </div>
+          <div class="card-body">
+            {% if duty %}
+              <div class="table-responsive">
+                <table class="table text-center table-hover">
+                  <thead>
+                    <tr>
+                      <th>Phone</th>
+                      <th>Name</th>
+                      <th>Status</th>
+                      <th>Lead Assigned On</th>
+                      <th>Lead Deadline</th>
+                      <th>Lead Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in duty %}
+                      <tr>
+                        <td>{{ i.lead.phone }}</td>
+                        <td>{{ i.lead.name }}</td>
+                        <td class="align-middle text-center">
+                          {% if i.lead.closed %}
+                            <span class="badge text-bg-success">Closed</span>
+                          {% elif i.lead.trash %}
+                            <span class="badge text-bg-danger">Trash</span>
+                          {% else %}
+                            {% if i.lead.assign_status %}
+                              <span class="badge text-bg-primary">Assigned</span>
+                              {% if not i.lead.lead_status %}
+                                <span class="badge text-bg-warning">Not Answered</span>
+                              {% endif %}
+                            {% else %}
+                              <span class="badge text-bg-danger">Unassigned</span>
+                            {% endif %}
+                            {% if i.lead.lead_status %}
+                              <span class="badge text-bg-secondary">Followup</span>
+                            {% endif %}
+                          {% endif %}
+                        </td>
+                        <td>{{ i.created_on }}</td>
+                        <td>{{ i.delete_date }}</td>
+                        <td>
+                          <a href="{% url 'super_status' i.lead.id %}" class="btn btn-sm btn-primary">Lead Status</a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              <div class="text-center py-5">
+                <h4 class="text-muted">No leads assigned</h4>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="daily" role="tabpanel" aria-labelledby="daily-tab">
+        <div class="card">
+          <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: #7f4f24;">
+            <h3 class="mb-0 text-white">Daily Quality</h3>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#dailyModal" class="btn btn-light"><i class="fas fa-plus"></i> Add</button>
+          </div>
+          <div class="card-body">
+            {% if daily %}
+              <div class="table-responsive my-3">
+                <table class="table text-center table-hover">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Total Quality</th>
+                      <th>Completed</th>
+                      <th>Uncompleted</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in daily %}
+                      <tr>
+                        <td>{{ i.date }}</td>
+                        <td>{{ i.target }}</td>
+                        <td>{{ i.target_won }}</td>
+                        <td>{{ i.target_remaining }}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              <div class="text-center py-5">
+                <h4 class="text-muted">No data available</h4>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
+        <div class="card">
+          <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: #386641;">
+            <h3 class="mb-0 text-white">Monthly Quality</h3>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#monthlyModal" class="btn btn-light"><i class="fas fa-plus"></i> Add</button>
+          </div>
+          <div class="card-body">
+            {% if data %}
+              <div class="table-responsive my-3">
+                <table class="table text-center table-hover">
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Total Target</th>
+                      <th>Completed</th>
+                      <th>Remaining</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in data %}
+                      <tr>
+                        <td>{{ i.month }}</td>
+                        <td>{{ i.target }}</td>
+                        <td>{{ i.target_won }}</td>
+                        <td>{{ i.target_remaining }}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              <div class="text-center py-5">
+                <h4 class="text-muted">No data available</h4>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal fade" id="dailyModal" tabindex="-1" aria-labelledby="dailyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header text-white">
+          <h5 class="modal-title" id="dailyModalLabel">Add Daily Target</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="{% url 'daily' %}">
+            {% csrf_token %}
+            <input type="hidden" name="user" value="{{ person1.id }}" />
+            <div class="mb-3">
+              <label for="qualities" class="form-label">Quality</label>
+              <input type="text" class="form-control" id="qualities" name="qualities" required />
+            </div>
+            <button type="submit" name="quality" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="monthlyModal" tabindex="-1" aria-labelledby="monthlyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header text-white">
+          <h5 class="modal-title" id="monthlyModalLabel">Add Monthly Target</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="{% url 'monthly' %}">
+            {% csrf_token %}
+            <input type="hidden" name="user" value="{{ person1.id }}" />
+            <div class="mb-3">
+              <label for="target" class="form-label">Target</label>
+              <input type="text" class="form-control" id="target" name="target" required />
+            </div>
+            <button type="submit" name="targets" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

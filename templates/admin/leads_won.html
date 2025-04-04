@@ -1,0 +1,48 @@
+{% extends 'common/admin/common.html' %}
+{% block content %}
+  <div class="card" style="margin: 3rem 2rem;">
+    <div class="d-flex justify-content-between px-3 align-items-center" style="height: 7em;">
+      <h3 class="card-title fw-bold text-black mb-0">Leads Won</h3>
+    </div>
+    {% if won %}
+      <div class="table-responsive text-nowrap">
+        <table class="table text-center table-striped">
+          <thead>
+            <tr>
+              <th>Sales Person</th>
+              <th>Lead Name</th>
+              <th>Lead Number</th>
+              <th>Course</th>
+              <th>Mode</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0 leads-list">
+            {% for j in won %}
+              <tr class="lead">
+                <td>
+                  {% if j.employee %}
+                    <h6>{{ j.employee }}</h6>
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td>
+                  <h5 style="font-size:12pt;margin-top:0.6em">{{ j.lead }}</h5>
+                </td>
+                <td>{{ j.lead.phone }}</td>
+                <td>{{ j.course }}</td>
+                <td>
+                  {{ j.mode }}<br />{{ j.type }}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+        <h4>No leads won yet</h4>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,189 @@
+{% extends 'common/superuser/common.html' %}
+
+{% block title %}
+  Reports
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between pb-0">
+            <h4>Reports of {{ name }}</h4>
+          </div>
+
+          {% comment %} <div class="card mb-4 mx-3 mt-4">
+            <div class="card-body">
+              <h5 class="card-title">Filter Reports</h5>
+              <form class="row g-3">
+                <div class="col-md-4">
+                  <label for="startDate" class="form-label">Start Date</label>
+                  <input type="date" class="form-control" id="startDate" />
+                </div>
+                <div class="col-md-4">
+                  <label for="endDate" class="form-label">End Date</label>
+                  <input type="date" class="form-control" id="endDate" />
+                </div>
+                <div class="col-md-4 mt-5 d-flex align-items-center">
+                  <button type="submit" class="btn btn-primary">Apply Filter</button>
+                </div>
+              </form>
+            </div>
+          </div> {% endcomment %}
+
+          <div class="card mb-4 mx-3 mt-4 py-3">
+            <ul class="nav nav-tabs" id="reportTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="daily-tab" data-bs-toggle="tab" data-bs-target="#daily" type="button" role="tab" aria-controls="daily" aria-selected="true">Daily Followups</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="monthly-followups-tab" data-bs-toggle="tab" data-bs-target="#monthly-followups" type="button" role="tab" aria-controls="monthly-followups" aria-selected="false">Monthly Followups</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="monthly-won-tab" data-bs-toggle="tab" data-bs-target="#monthly-won" type="button" role="tab" aria-controls="monthly-won" aria-selected="false">Monthly Won</button>
+              </li>
+            </ul>
+
+            <div class="tab-content" id="reportTabsContent">
+              <div class="tab-pane fade show active" id="daily" role="tabpanel" aria-labelledby="daily-tab">
+                {% if report %}
+                  <div class="table-responsive mt-3">
+                    <table class="table text-center table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for i in report %}
+                          <tr>
+                            <td>{{ i.created_on }}</td>
+                            <td>
+                              <a href="{{ i.csv.url }}" target="_blank" download><button class="btn btn-primary btn-sm">Download</button></a>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                {% else %}
+                  <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+                    <h4>No Reports</h4>
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="tab-pane fade" id="monthly-followups" role="tabpanel" aria-labelledby="monthly-followups-tab">
+                {% if followup %}
+                  <div class="table-responsive mt-3">
+                    <table class="table text-center table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th>Month</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for i in followup %}
+                          <tr>
+                            <td>{{ i.created_on|date:'F' }}</td>
+                            <td>
+                              <a href="{{ i.csv.url }}" target="_blank" download><button class="btn btn-primary btn-sm">Download</button></a>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                {% else %}
+                  <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+                    <h4>No Reports</h4>
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="tab-pane fade" id="monthly-won" role="tabpanel" aria-labelledby="monthly-won-tab">
+                <div class="table-responsive mt-3">
+                  {% if won %}
+                    <div class="table-responsive mt-3">
+                      <table class="table text-center table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th>Month</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for i in won %}
+                            <tr>
+                              <td>{{ i.created_on|date:'F' }}</td>
+                              <td>
+                                <a href="{{ i.csv.url }}" target="_blank" download><button class="btn btn-primary btn-sm">Download</button></a>
+                              </td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  {% else %}
+                    <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+                      <h4>No Reports</h4>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between pb-0">
+            <h4>Daily Call Report</h4>
+          </div>
+          {% if sr %}
+            <div class="table-responsive text-center text-nowrap p-5">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Saleperson</th>
+                    <th>Total Leads</th>
+                    <th>Followups</th>
+                    <th>Not Answered</th>
+                    <th>Not Interested</th>
+                  </tr>
+                </thead>
+                <tbody class="table-border-bottom-0 leads-list">
+                  {% for i in sr %}
+                    <tr class="lead">
+                      <td>
+                        <h5 style="font-size:12pt;margin-top:0.6em">{{ i.emp }}</h5>
+                      </td>
+                      <td>
+                        <h6>{{ i.total }}</h6>
+                      </td>
+                      <td>{{ i.follow }}</td>
+                      <td>{{ i.Notanswer }}</td>
+                      <td>{{ i.Notinterested }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+              <h4>No Reports</h4>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'admin/common.html' %}
+ {% block content %}
+<div class="card" style="margin: 3rem 2rem;">
+        <h5 class="card-header">Edit Details</h5>
+        <form method="post" style="margin: 0 2rem 2rem 2rem;">
+        {% csrf_token %}
+              <div class="form-floating">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="name"
+                          aria-describedby="floatingInputHelp"
+                          value="{{user.first_name}}"
+                        />
+                        <label for="floatingInput">Name</label>
+              </div>
+
+            <div class="form-floating mt-2">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="username"
+                          aria-describedby="floatingInputHelp"
+                          value="{{user.username}}"
+                        />
+                        <label for="floatingInput">Username</label>
+              </div>
+              <div class="form-floating mt-2">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="password"
+                          aria-describedby="floatingInputHelp"
+                          value=""
+                        />
+                        <label for="floatingInput">Password</label>
+              </div>
+              <button type="submit" class="btn btn-primary mt-4">Edit</button>
+          </form>
+</div>
+{% endblock %}

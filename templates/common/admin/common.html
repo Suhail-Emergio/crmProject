@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="{% static 'assets/' %}" data-template="vertical-menu-template-free">
+  <head>
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+      
+      body {
+        background: #f2f2f2;
+        font-family: 'Open Sans', sans-serif;
+      }
+      .upload-area {
+        border: 2px dashed #4a90e2;
+        border-radius: 8px;
+        padding: 40px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .upload-area:hover {
+        background-color: #f0f8ff;
+      }
+      .upload-icon {
+        font-size: 48px;
+        color: #4a90e2;
+        margin-bottom: 10px;
+      }
+      .upload-text {
+        color: #333;
+        font-size: 1rem;
+        margin-bottom: 10px;
+      }
+      .file-input {
+        display: none;
+      }
+      .file-name {
+        margin-top: 15px;
+        font-size: 0.9rem;
+        color: #666;
+      }
+      .submit-button {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        width: 100%;
+        margin-top: 20px;
+        transition: background-color 0.3s ease;
+      }
+      .submit-button:hover {
+        background-color: #3a7bc8;
+      }
+      .settings-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .settings-header {
+        background-color: #264653;
+        color: white;
+        padding: 2rem;
+        position: relative;
+      }
+      .settings-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .settings-header p {
+        opacity: 0.8;
+        margin-bottom: 0;
+      }
+      .settings-body {
+        padding: 2rem;
+      }
+      .setting-item {
+        background-color: #f1f3f5;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+      }
+      .setting-item:hover {
+        background-color: #e9ecef;
+        transform: translateY(-2px);
+      }
+      .setting-item h3 {
+        color: #4a90e2;
+        margin-bottom: 0.5rem;
+      }
+      .setting-value {
+        font-weight: 500;
+        color: #495057;
+      }
+      .btn-change {
+        background-color: transparent;
+        color: #4a90e2;
+        border: 2px solid #4a90e2;
+        border-radius: 20px;
+        padding: 0.375rem 1rem;
+        transition: all 0.3s ease;
+      }
+      .btn-change:hover {
+        background-color: #4a90e2;
+        color: white;
+      }
+      td,th {
+        text-align: center;
+        vertical-align: middle;
+        height: 4em;
+      }
+    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Emergio CRM</title>
+
+    <meta name="description" content="" />
+    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon/favicon.ico' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/boxicons.css' %}" />
+    <link rel="icon" href="{% static 'assets/img/icon.jpg' %}" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/core.css' %}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/theme-default.css' %}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/apex-charts/apex-charts.css' %}" />
+
+    <!-- Scripts -->
+    <script src="{% static 'assets/vendor/js/helpers.js' %}"></script>
+    <script src="{% static 'assets/js/config.js' %}"></script>
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        {% include 'common/admin/menu.html' %}
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          {% include 'common/admin/navbar.html' %}
+
+          <section>
+            {% block content %}
+
+            {% endblock %}
+          </section>
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  ©<script>
+                     document.write(new Date().getFullYear())
+                   </script>, made by EmergioGames Pvt Ltd.
+                </div>
+              </div>
+            </footer>
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- Core JS -->
+    <script src="{% static 'assets/vendor/libs/jquery/jquery.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/popper/popper.js' %}"></script>
+    <script src="{% static 'assets/vendor/js/bootstrap.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+    <script src="{% static 'assets/vendor/js/menu.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script src="{% static 'assets/js/dashboards-analytics.js' %}"></script>
+
+    <script>
+      const search = () => {
+        const searchInput = document.getElementById('search-input').value.toUpperCase()
+        console.log(searchInput)
+        const items = document.getElementsByClassName('leads-list')
+        const product = document.querySelectorAll('.lead')
+        const names = document.getElementsByTagName('h5')
+        const numbers = document.getElementsByTagName('h6')
+        if (!isNaN(searchInput)) {
+          for (let i = 0; i < numbers.length; i++) {
+            let match = product[i].getElementsByTagName('h6')[0]
+            if (match) {
+              let tvalue = match.textContent || match.innerHTML
+              if (tvalue.toUpperCase().indexOf(searchInput) > -1) {
+                product[i].style.display = ''
+              } else {
+                product[i].style.display = 'none'
+              }
+            }
+          }
+        } else {
+          for (let i = 0; i < names.length; i++) {
+            let match = product[i].getElementsByTagName('h5')[0]
+            if (match) {
+              let tvalue = match.textContent || match.innerHTML
+              if (tvalue.toUpperCase().indexOf(searchInput) > -1) {
+                product[i].style.display = ''
+              } else {
+                product[i].style.display = 'none'
+              }
+            }
+          }
+        }
+      }
+      
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

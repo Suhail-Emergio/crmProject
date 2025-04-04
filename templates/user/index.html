@@ -1,0 +1,346 @@
+{% extends 'common/user/common.html' %}
+{% load static %}
+{% block content %}
+<div style="background: #41748a;" class="text-white rounded p-4 mb-4 shadow">
+    <div class="d-flex align-items-center">
+        <div>
+            <h2 class="fs-3 fw-bold mb-0">Welcome, {{user.name}}</h2>
+            <p class="text-indigo-200 mb-0">It's a pleasure to have you here. Have a great day!</p>
+        </div>
+    </div>
+</div>
+{% if callbacks_today %}
+<div class="row">
+    <h4 class="mb-4 ">Today's Important Callbacks</h4>
+    {% for callback in callbacks_today %}
+            <div class="col-md-6 mb-4">
+                <div class="card bg-primary text-white shadow card-hover">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title">Callback #{{ forloop.counter }}</h5>
+                            <span class="badge bg-warning text-dark">
+                                <i class="far fa-clock me-1"></i>Today
+                            </span>
+                        </div>
+                        <a href="{% url 'status' callback.id %}" class="btn btn-outline-light mt-3 w-100">
+                            <h4 class="card-text mb-0">{{ callback }}</h4>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+{% endif %}
+<div style="background: #006d77;" class=" text-white rounded p-4 shadow">
+    <div class="row g-3">
+        {% if daily %}
+        <div class="col-md-4">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Daily Quality</h6>
+                <p class="fs-4 fw-bold mb-0">{{daily.target}}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Quality Completed</h6>
+                <p class="fs-4 fw-bold mb-0">{{daily.target_won}}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Quality Uncompleted</h6>
+                <p class="fs-4 fw-bold mb-0">{{daily.target_remaining}}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-4">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Yesterday's Quality</h6>
+                <p class="fs-4 fw-bold mb-0">{{yesterday.target}}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Quality Completed</h6>
+                <p class="fs-4 fw-bold mb-0">{{yesterday.target_won}}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Quality Uncompleted</h6>
+                <p class="fs-4 fw-bold mb-0">{{yesterday.target_remaining}}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <hr class="border-light my-4">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Monthly Target</h6>
+                <p class="fs-4 fw-bold mb-0">{{target.target}}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Target Completed</h6>
+                <p class="fs-4 fw-bold mb-0">{{target.target_won}}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Target Remaining</h6>
+                <p class="fs-4 fw-bold mb-0">{{target.target_remaining}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="background: #006d77;" class="my-3 text-white rounded p-4 shadow">
+    <div class="row g-3">
+        <div class="col-md-3">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Leads Assigned</h6>
+                <p class="fs-4 fw-bold mb-0">{{total_duty}}</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Callbacks</h6>
+                <p class="fs-4 fw-bold mb-0">{{callbacks}}</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Leads Won</h6>
+                <p class="fs-4 fw-bold mb-0">{{total_won}}</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="bg-emerald-800 rounded p-3 text-center">
+                <h6 class="fw-bold mb-2">Follow Ups</h6>
+                <p class="fs-4 fw-bold mb-0">{{completed}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style=" display: flex;justify-content: center;align-items: center;width:100%">
+    <div class="col-md-6 col-12">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0 text-center">Daily Report</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="myChart" style="width:100%; height:300px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Uncompleted', 'Follow Up', 'Won'],
+                        datasets: [{
+                            data: [{{uncompleted}}, {{completed}}, {{l_won}}], // Replace with your actual data
+                            backgroundColor: ['#277da1', '#52796f', '#355070'],
+                            borderColor: ['#ffffff', '#ffffff', '#ffffff'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            },
+                            title: {
+                                display: false,
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    </div>
+    <div class="col-md-6 col-12">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8">
+                    <div class="card shadow">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="card-title mb-0 text-center">Leads Won</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="leadsChart" style="width:100%; height:400px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var ctx = document.getElementById('leadsChart').getContext('2d');
+                var monthNames = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+                
+                var sampleData = [
+                {% for i in won %}
+                    {count: {{i.count}}, month: {{i.month}}},
+                {% endfor %}
+            ];
+    
+                var labels = sampleData.map(item => monthNames[item.month - 1]);
+                var data = sampleData.map(item => item.count);
+    
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Leads Won',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Number of Leads'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Month'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            title: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+
+    </div>
+    <div class="container mt-5">
+        <h3 class="section-title">Leads</h4>
+        <div class="table-responsive">
+            <table class="table text-center table-hover">
+                <thead>
+                    <tr class="table-header">
+                        <th scope="col" class="p-3">Sl no</th>
+                        <th scope="col" class="p-3">Name</th>
+                        <th scope="col" class="p-3">Phone Number</th>
+                        <th scope="col" class="p-3">Email</th>
+                        <th scope="col" class="p-3">Lead Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in duty %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{i.lead.name}}</td>
+                        <td>{{i.lead.number}}</td>
+                        <td>{{i.lead.email}}</td>
+                        <td class="text-center">
+                            <a href="{% url 'status' i.lead.id %}" class="btn btn-view btn-sm">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h3 class="section-title">Callbacks</h4>
+        <div class="table-responsive">
+            <table class="table text-center table-hover">
+                <thead>
+                    <tr class="table-header">
+                        <th scope="col" class="p-3">Sl no</th>
+                        <th scope="col" class="p-3">Date</th>
+                        <th scope="col" class="p-3">Name</th>
+                        <th scope="col" class="p-3">Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in calls %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{i.date}}</td>
+                        <td>{{i.duty.lead.name}}</td>
+                        <td>{{i.duty.lead.phone}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="container mt-5 mb-5" id="syllabus">
+        <h3 class="section-title">Syllabus</h4>
+        <div class="table-responsive">
+            <table class="table text-center table-hover">
+                <thead>
+                    <tr class="table-header">
+                        <th scope="col" class="p-3">Sl no</th>
+                        <th scope="col" class="p-3">Course</th>
+                        <th scope="col" class="p-3">Duration</th>
+                        <th scope="col" class="p-3">Fees</th>
+                        <th scope="col" class="p-3">Syllabus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in courses %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{i.name}}</td>
+                        <td class="course-info">
+                            <strong>Course:</strong> {{i.duration}}<br>
+                            <strong>Internship:</strong> {{i.internship}}
+                        </td>
+                        <td class="course-info">
+                            <strong>Base Fees:</strong> ₹{{i.rate}}<br>
+                            <strong>GST:</strong> {{i.gst}}%<br>
+                            <strong>Total:</strong> ₹{{i.total_rate}}
+                        </td>
+                        <td>
+                            <a href="{{ i.syllabus.url }}" target="_blank" download class="btn btn-download btn-primary">
+                                Download Syllabus
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

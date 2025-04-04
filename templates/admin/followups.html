@@ -1,0 +1,46 @@
+{% extends 'common/admin/common.html' %}
+{% block content %}
+  <div class="card" style="margin: 3rem 2rem;">
+    <div class="d-flex justify-content-between px-3 align-items-center" style="height: 7em;">
+      <h3 class="card-title fw-bold text-black mb-0">Follow Ups</h3>
+    </div>
+    {% if duty %}
+      <div class="table-responsive text-nowrap">
+        <table class="table text-center table-striped">
+          <thead>
+            <tr>
+              <th>Lead</th>
+              <th>Number</th>
+              <th>Status</th>
+              <th>Course</th>
+              <th>Notes</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0 leads-list">
+            {% for i in duty %}
+              <tr class="lead">
+                <td>
+                  <h5>{{ i.lead.name }}</h5>
+                </td>
+                <td>
+                  <h6>{{ i.lead.phone }}</h6>
+                </td>
+                <td>{{ i.status }} : {{ i.progress }}</td>
+                <td>{{ i.course }}</td>
+                <td>{{ i.notes }}</td>
+                <td style="height:4em">
+                  <a href="{% url 'lead_status' i.lead.id %}" class="btn btn-primary">view</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+        <h4>No Follow ups</h4>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

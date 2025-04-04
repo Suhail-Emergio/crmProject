@@ -1,0 +1,43 @@
+{% extends 'common/admin/common.html' %}
+{% block content %}
+  <div class="card" style="margin: 3rem 2rem;">
+    <div class="d-flex justify-content-between px-3 align-items-center" style="height: 7em;">
+      <h3 class="card-title fw-bold text-black mb-0">Payments</h3>
+    </div>
+    {% if payments %}
+      <div class="table-responsive text-nowrap">
+        <table class="table text-center table-striped">
+          <thead>
+            <tr>
+              <th>Lead</th>
+              <th>Lead Name</th>
+              <th>Amount</th>
+              <th>Screenshot</th>
+              {% comment %} <th>Actions</th> {% endcomment %}
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0 leads-list">
+            {% for i in payments %}
+              <tr class="lead">
+                <td>
+                  <h6>{{ i.lead.phone }}</h6>
+                </td>
+                <td>
+                  <h5 style="font-size:12pt;margin-top:0.6em">{{ i.lead }}</h5>
+                </td>
+                <td>{{ i.rate }}</td>
+                <td>
+                  <a href="{{ i.screenshot.url }}" target="_blank"><img style="height:10em" src="{{ i.screenshot.url }}" /></a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+        <h4>No Payments</h4>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,194 @@
+{% extends 'common/superuser/common.html' %}
+{% block content %}
+  <style>
+    .nav-tabs .nav-link {
+      border: none;
+      color: #354f52;
+      background: #cad2c5;
+      padding-inline: 2em;
+    }
+    .nav-tabs .nav-link.active {
+      background-color: #fff;
+      color: #000;
+    }
+  </style>
+
+  <div class="container-fluid py-4">
+    <ul class="nav nav-tabs mb-4 d-flex justify-content-center gap-1" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="leads-tab" data-bs-toggle="tab" data-bs-target="#leads" type="button" role="tab" aria-controls="leads" aria-selected="true">Employees</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="daily-tab" data-bs-toggle="tab" data-bs-target="#daily" type="button" role="tab" aria-controls="daily" aria-selected="false">Leads Won</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="monthly-tab" data-bs-toggle="tab" data-bs-target="#monthly" type="button" role="tab" aria-controls="monthly" aria-selected="false">Leads</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="leads" role="tabpanel" aria-labelledby="leads-tab">
+        <div class="card">
+          <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0 text-white">Employees</h3>
+          </div>
+          <div class="card-body">
+            {% if employee %}
+              <div class="table-responsive">
+                <table class="table text-center table-hover">
+                  <thead>
+                    <tr>
+                      <th>Phone</th>
+                      <th>Name</th>
+                      <th>Total Leads</th>
+                      <th>Todays Leads</th>
+                      <th>Strength</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in employee %}
+                      <tr class="lead">
+                        <td><h6 class="">{{ i.user.phone }}</h6></td>
+                        <td><h5 class="">{{ i.user.name }}</h5></td>
+                        <td>{{ i.total_lead }}</td>
+                        <td>{{ i.todays_lead }}</td>
+                        <td>{{ i.strength }}</td>
+                        <td>
+                          <a href="{% url 'delete_employee' i.id %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              <div class="text-center py-5">
+                <h4 class="text-muted">No Employees</h4>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="daily" role="tabpanel" aria-labelledby="daily-tab">
+        <div class="card">
+          <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: #7f4f24;">
+            <h3 class="mb-0 text-white">Leads Won</h3>
+          </div>
+          <div class="card-body">
+            {% if won %}
+              <div class="table-responsive my-3">
+                <table class="table text-center table-hover">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Name</th>
+                      <th>Course</th>
+                      <th>Mode & Type</th>
+                      <th>Closed by</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in won %}
+                      <tr class="lead">
+                        <td>{{ i.won_on }}</td>
+                        <td><h5 class="">{{ i.lead.name }}</h5></td>
+                        <td>{{ i.course }}</td>
+                        <td>
+                          <p>{{ i.mode }}</p>
+                          <p>{{ i.type }}</p>
+                        </td>
+                        <td>
+                          {% if i.employee %}
+                            {{ i.employee }}
+                          {% else %}
+                            -
+                          {% endif %}
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              <div class="text-center py-5">
+                <h4 class="text-muted">No Leads Won</h4>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
+        <div class="card">
+          <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: #386641;">
+            <h3 class="mb-0 text-white">Leads</h3>
+          </div>
+          <div class="card-body">
+            {% if lead %}
+              <div class="card-body px-0 pt-0 pb-2">
+                <div class="table-responsive p-0">
+                  <table class="table text-center align-items-center mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-7">Name</th>
+                        <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-7 ps-2">Email</th>
+                        <th class="text-center text-uppercase text-dark text-sm font-weight-bolder opacity-7">Phone</th>
+                        <th class="text-center text-uppercase text-dark text-sm font-weight-bolder opacity-7">Status</th>
+                        <th class="text-center text-uppercase text-dark text-sm font-weight-bolder opacity-7">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in lead %}
+                        <tr class="lead">
+                          <td>
+                            <div class="px-2 py-1">
+                              <h5 class="">{{ i.name }}</h5>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-dark mb-0">{{ i.email }}</p>
+                          </td>
+                          <td class="align-middle text-center">
+                            <h6 class="text-dark mb-0">{{ i.phone }}</h6>
+                          </td>
+                          <td class="align-middle text-center">
+                            {% if i.closed %}
+                              <span class="badge text-bg-success">Closed</span>
+                            {% elif i.trash %}
+                              <span class="badge text-bg-danger">Trash</span>
+                            {% else %}
+                              {% if i.assign_status %}
+                                <span class="badge text-bg-primary">Assigned</span>
+                                {% if not i.lead_status %}
+                                  <span class="badge text-bg-warning">Not Answered</span>
+                                {% endif %}
+                              {% else %}
+                                <span class="badge text-bg-danger">Unassigned</span>
+                              {% endif %}
+                              {% if i.lead_status %}
+                                <span class="badge text-bg-secondary">Followup</span>
+                              {% endif %}
+                            {% endif %}
+                          </td>
+                          <td class="align-middle">
+                            <a href="{% url 'super_status' i.id %}" class="text-sm mt-2 badge text-bg-outline-info text-primary">Lead Status</a>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            {% else %}
+              <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+                <h4>No leads</h4>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

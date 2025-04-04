@@ -1,0 +1,205 @@
+{% extends 'common/superuser/common.html' %}
+
+{% block title %}
+  Admin
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between px-5 pb-0">
+            <h5>{{title}}</h5>
+            <div>
+              {% if title == "Banned Admins" %}
+              <a href="{% url 'admin' %}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Go back"  class="font-weight-bold text-md btn btn-primary" data-toggle="tooltip" data-original-title="Edit user">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+                </svg>
+              </a>
+              {% else %}
+              <a href="{% url 'admin' action='ban' %}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Banned Admins" class="font-weight-bold text-sm btn btn-primary" data-toggle="tooltip" data-original-title="Edit user">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-ban" viewBox="0 0 16 16">
+                  <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0" />
+                </svg>
+              </a>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" data-bs-placement="bottom" title="Add admin">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                </svg>
+              </button>
+              {% endif %}
+            </div>
+          </div>
+          {% if admin %}
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table text-center align-items-center mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-7">Name</th>
+                    <th class="text-center text-uppercase text-dark text-sm font-weight-bolder opacity-7">Phone</th>
+                    <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-7 ps-2">Email</th>
+                    <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-7 ps-2">Target</th>
+                    <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-7 ps-2">Target Completed</th>
+                    <th class="text-center text-uppercase text-dark text-sm font-weight-bolder opacity-7">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in admin %}
+                    <tr class="lead">
+                      <td>
+                        <div class="px-2 py-1">
+                          <h5 class="">{{ i.user.name }}</h5>
+                        </div>
+                      </td>
+                      <td class="align-middle text-center">
+                        <h6 class="text-dark mb-0">{{ i.user.phone }}</h6>
+                      </td>
+                      <td>
+                        <p class="text-dark mb-0">{{ i.user.email }}</p>
+                      </td>
+                      <td>
+                        <p class="text-dark mb-0">{{ i.target }}</p>
+                      </td>
+                      <td>
+                        <p class="text-dark mb-0">{{ i.target_won }}</p>
+                      </td>
+                      <td class="">
+                        <a href="{% url 'admin_duty' i.id %}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="View" class="font-weight-bold text-sm btn btn-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32"><path fill="currentColor" d="M30.94 15.66A16.69 16.69 0 0 0 16 5A16.69 16.69 0 0 0 1.06 15.66a1 1 0 0 0 0 .68A16.69 16.69 0 0 0 16 27a16.69 16.69 0 0 0 14.94-10.66a1 1 0 0 0 0-.68ZM16 25c-5.3 0-10.9-3.93-12.93-9C5.1 10.93 10.7 7 16 7s10.9 3.93 12.93 9C26.9 21.07 21.3 25 16 25Z"/><path fill="currentColor" d="M16 10a6 6 0 1 0 6 6a6 6 0 0 0-6-6Zm0 10a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"/></svg>
+                        </a>
+                        <button data-bs-toggle="modal"  data-bs-target="#editModal{{i.id}}" class="font-weight-bold text-sm btn btn-primary" data-bs-placement="bottom" title="Edit">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                          </svg>
+                        </button>
+                        <div class="modal fade" id="editModal{{i.id}}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel{{i.id}}">Edit Item</h5>
+                                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                  </svg>
+                                </button>
+                              </div>
+                              <div class="modal-body text-start">
+                                <form action="{% url "edit_admin" i.id %}" method="post">
+                                  {% csrf_token %}
+                                  <div class="mb-3">
+                                    <label for="adminName" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="adminName" value="{{i.user.name}}" name="name" required />
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="adminEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="adminEmail" value="{{i.user.email}}" name="email" required />
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="adminPhone" class="form-label">Phone Number</label>
+                                    <input type="tel" pattern="[0-9]{10}" class="form-control" value="{{i.user.phone}}" id="adminPhone" name="phone" required placeholder="987-654-3210">
+                                    </div>
+                                  <div class="mb-3">
+                                    <label for="adminEmail" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="adminEmail" name="password" />
+                                  </div>
+                                  <button type="submit" class="btn btn-primary">Edit Admin</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <a href="{% url 'block' i.user.id %}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ban/ Unban" class="font-weight-bold text-sm btn btn-primary" >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-ban" viewBox="0 0 16 16">
+                            <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0" />
+                          </svg>
+                        </a>
+                        <a href="{% url 'delete_admin' i.id %}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Delete" class="font-weight-bold text-sm btn btn-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                          </svg>
+                        </a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% else %}
+      <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+        <h4>No {{title}}</h4>
+      </div>
+    {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addModalLabel">Add Admin</h5>
+          <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000" class="bi bi-x-lg" viewBox="0 0 16 16">
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url "create_admin" %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="adminName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="adminName" name="name" required />
+            </div>
+            <div class="mb-3">
+              <label for="adminEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="adminEmail" name="email" required />
+            </div>
+            <div class="mb-3">
+              <label for="adminPhone" class="form-label">Phone Number</label>
+              <input type="tel" pattern="[0-9]{10}" class="form-control" id="adminPhone" name="phone" required placeholder="987-654-3210">
+              </div>
+            <div class="mb-3">
+              <label for="adminEmail" class="form-label">Password</label>
+              <input type="password" class="form-control" id="adminEmail" name="password" required />
+            </div>
+            <div class="mb-3">
+              <label for="adminEmail" class="form-label">Target</label>
+              <input type="number" class="form-control" id="adminEmail" name="target" required />
+            </div>
+            <button name="add" type="submit" class="btn btn-primary">Add Admin</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if messages %}
+      {% for message in messages %}
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+          <div id="toastLiveExample" class="toast bg-dark text-light py-2" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body">
+              <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+  <script>
+    window.addEventListener('load', function () {
+      {% if messages %}
+        const toastElement = document.getElementById('toastLiveExample');
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastElement);
+        toastBootstrap.show();
+        setTimeout(() => { toastBootstrap.hide() }, 1000);
+      {% endif %}
+    });
+  </script>
+{% endblock %}

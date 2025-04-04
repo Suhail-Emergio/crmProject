@@ -1,0 +1,210 @@
+{% extends 'common/admin/common.html' %}
+{% block content %}
+  <div class="container-fluid py-4">
+
+    <ul class="nav nav-tabs mb-4 d-flex justify-content-center" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" style="border-top-left-radius: 2.5em;border-bottom-left-radius: 2.5em;" id="leads-tab" data-bs-toggle="tab" data-bs-target="#leads" type="button" role="tab" aria-controls="leads" aria-selected="true">Leads Assigned</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="daily-tab" data-bs-toggle="tab" data-bs-target="#daily" type="button" role="tab" aria-controls="daily" aria-selected="false">Daily Quality</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="monthly-tab" style="border-top-right-radius: 2.5em;border-bottom-right-radius: 2.5em;" data-bs-toggle="tab" data-bs-target="#monthly" type="button" role="tab" aria-controls="monthly" aria-selected="false">Monthly Quality</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="leads" role="tabpanel" aria-labelledby="leads-tab">
+        <div class="card">
+          <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0 text-white">Leads Assigned</h3>
+          </div>
+          <div class="card-body">
+            {% if duty %}
+              <div class="table-responsive">
+                <table class="table text-center table-hover">
+                  <thead>
+                    <tr>
+                      <th>Phone</th>
+                      <th>Name</th>
+                      <th>Lead Assigned On</th>
+                      <th>Lead Last Date</th>
+                      <th>Lead Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in duty %}
+                      <tr>
+                        <td>{{ i.lead.phone }}</td>
+                        <td>{{ i.lead.name }}</td>
+                        <td>{{ i.created_on }}</td>
+                        <td>{{ i.delete_date }}</td>
+                        <td>
+                          <a href="{% url 'lead_status' i.lead.id %}" class="btn btn-sm btn-primary">Lead Status</a>
+                        </td>
+                        <td>
+                          <a href="{% url 'del_duty' i.id %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              <div class="text-center py-5">
+                <h4 class="text-muted">No leads assigned</h4>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="daily" role="tabpanel" aria-labelledby="daily-tab">
+        <div class="card">
+          <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: #7f4f24;">
+            <h3 class="mb-0 text-white">Daily Quality</h3>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#dailyModal" class="btn btn-light"><i class="fas fa-plus"></i> Add</button>
+          </div>
+          <div class="card-body">
+            {% if daily %}
+              <div class="table-responsive my-3">
+                <table class="table text-center table-hover">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Total Quality</th>
+                      <th>Completed</th>
+                      <th>Uncompleted</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in daily %}
+                      <tr>
+                        <td>{{ i.date }}</td>
+                        <td>{{ i.target }}</td>
+                        <td>{{ i.target_won }}</td>
+                        <td>{{ i.target_remaining }}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              <div class="text-center py-5">
+                <h4 class="text-muted">No data available</h4>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
+        <div class="card">
+          <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: #386641;">
+            <h3 class="mb-0 text-white">Monthly Quality</h3>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#monthlyModal" class="btn btn-light"><i class="fas fa-plus"></i> Add</button>
+          </div>
+          <div class="card-body">
+            {% if data %}
+              <div class="table-responsive my-3">
+                <table class="table text-center table-hover">
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Total Target</th>
+                      <th>Completed</th>
+                      <th>Remaining</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in data %}
+                      <tr>
+                        <td>{{ i.month }}</td>
+                        <td>{{ i.target }}</td>
+                        <td>{{ i.target_won }}</td>
+                        <td>{{ i.target_remaining }}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              <div class="text-center py-5">
+                <h4 class="text-muted">No data available</h4>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal fade" id="dailyModal" tabindex="-1" aria-labelledby="dailyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header text-white">
+          <h5 class="modal-title" id="dailyModalLabel">Add Daily Target</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="{% url 'daily' %}">
+            {% csrf_token %}
+            <input type="hidden" name="user" value="{{ person1.id }}" />
+            <div class="mb-3">
+              <label for="qualities" class="form-label">Quality</label>
+              <input type="text" class="form-control" id="qualities" name="qualities" required />
+            </div>
+            <button type="submit" name="quality" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="monthlyModal" tabindex="-1" aria-labelledby="monthlyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header text-white">
+          <h5 class="modal-title" id="monthlyModalLabel">Add Monthly Target</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="{% url 'monthly' %}">
+            {% csrf_token %}
+            <input type="hidden" name="user" value="{{ person1.id }}" />
+            <div class="mb-3">
+              <label for="target" class="form-label">Target</label>
+              <input type="text" class="form-control" id="target" name="target" required />
+            </div>
+            <button type="submit" name="targets" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if duty.has_other_pages %}
+  <ul class="pagination">
+    {% if duty.has_previous %}
+      <li><a href="?page={{ duty.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in duty.paginator.page_range %}
+      {% if duty.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if duty.has_next %}
+      <li><a href="?page={{ duty.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% endblock %}

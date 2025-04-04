@@ -1,0 +1,100 @@
+{% extends 'common/superuser/common.html' %}
+
+{% block title %}
+  Leads
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between px-5 pb-3">
+            <h5>Leads</h5>
+          </div>
+          {% if lead %}
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table text-center align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-7">Name</th>
+                      <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-7 ps-2">Email</th>
+                      <th class="text-center text-uppercase text-dark text-sm font-weight-bolder opacity-7">Phone</th>
+                      <th class="text-center text-uppercase text-dark text-sm font-weight-bolder opacity-7">Status</th>
+                      <th class="text-center text-uppercase text-dark text-sm font-weight-bolder opacity-7">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in lead %}
+                      <tr class="lead">
+                        <td>
+                          <div class="px-2 py-1">
+                            <h5 class="">{{ i.name }}</h5>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-dark mb-0">{{ i.email }}</p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <h6 class="text-dark mb-0">{{ i.phone }}</h6>
+                        </td>
+                        <td class="align-middle text-center">
+                          {% if i.closed %}
+                            <span class="badge text-bg-success">Closed</span>
+                          {% elif i.trash %}
+                            <span class="badge text-bg-danger">Trash</span>
+                          {% else %}
+                            {% if i.assign_status %}
+                            <span class="badge text-bg-primary">Assigned</span>
+                            {% if not i.lead_status %}
+                              <span class="badge text-bg-warning">Not Answered</span>
+                              {% endif %}
+                            {% else %}
+                              <span class="badge text-bg-danger">Unassigned</span>
+                            {% endif %}
+                            {% if i.lead_status %}
+                              <span class="badge text-bg-secondary">Followup</span>
+                            {% endif %}
+                          {% endif %}
+                        </td>
+                        <td class="align-middle">
+                          <a href="{% url 'super_status' i.id %}" class="text-sm mt-2 badge text-bg-outline-info text-primary">Lead Status </a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          {% else %}
+            <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+              <h4>No leads</h4>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if lead.has_other_pages %}
+  <ul class="pagination">
+    {% if lead.has_previous %}
+      <li><a href="?page={{ lead.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in lead.paginator.page_range %}
+      {% if lead.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if lead.has_next %}
+      <li><a href="?page={{ lead.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% endblock %}

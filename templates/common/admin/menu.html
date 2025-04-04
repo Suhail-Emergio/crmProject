@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+      <div class="app-brand demo bg-light">
+        <a href="{% url 'dash' %}" class="app-brand-link"><img src="{% static 'assets/img/logo.png' %}" alt="" style="width: 60%;" /></a>
+
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none"><i class="bx bx-chevron-left bx-sm align-middle"></i></a>
+      </div>
+
+      <div class="menu-inner-shadow"></div>
+      <div>
+        <ul class="menu-inner py-3" style="height: 85dvh;">
+          {% comment %}Dashboard{% endcomment %}
+          <li class="w-75 my-3">
+            <a href="{% url 'dash' %}" class="d-flex justify-content-center align-items-center gap-2 text-center" style="color: #F0F8FF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.557 2.75H4.682A1.932 1.932 0 0 0 2.75 4.682v3.875a1.942 1.942 0 0 0 1.932 1.942h3.875a1.942 1.942 0 0 0 1.942-1.942V4.682A1.942 1.942 0 0 0 8.557 2.75m10.761 0h-3.875a1.942 1.942 0 0 0-1.942 1.932v3.875a1.943 1.943 0 0 0 1.942 1.942h3.875a1.942 1.942 0 0 0 1.932-1.942V4.682a1.932 1.932 0 0 0-1.932-1.932m0 10.75h-3.875a1.942 1.942 0 0 0-1.942 1.933v3.875a1.942 1.942 0 0 0 1.942 1.942h3.875a1.942 1.942 0 0 0 1.932-1.942v-3.875a1.932 1.932 0 0 0-1.932-1.932M8.557 13.5H4.682a1.943 1.943 0 0 0-1.932 1.943v3.875a1.932 1.932 0 0 0 1.932 1.932h3.875a1.942 1.942 0 0 0 1.942-1.932v-3.875a1.942 1.942 0 0 0-1.942-1.942" />
+              </svg>
+              <div>Dashboard</div>
+            </a>
+          </li>
+
+          {% comment %}Leads{% endcomment %}
+          <li class="w-75 my-3">
+            <a href="/lead" class="d-flex justify-content-center align-items-center gap-2 text-center" style="color: #F0F8FF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 1024 1024"><path fill="currentColor" d="M955 768q-20 34-58 44.5t-72.5-9.5t-45-58.5T789 672q61-106 68-226.5T817.5 216T680 29q47 16 88 40q90 52 152 134.5t87 176t12.5 196T955 768zM768 955q-90 52-192.5 64.5t-196-12.5t-176-87T69 768q-20-34-10-72.5t44.5-58.5t73-9.5T235 672q46 80 116 138t151 86.5t170.5 31T846 899q-37 33-78 56zM512 192q-123 0-230.5 54.5T103 395.5T9 608q-9-49-9-96q0-104 40.5-199t109-163.5T313 40.5T512 0q40 0 68 28t28 68t-28 68t-68 28z"/></svg>
+              <div>Leads</div>
+            </a>
+          </li>
+
+          {% comment %}Campain Leads{% endcomment %}
+          <li class="w-75 my-3">
+            <a href="/campain_leads" class="d-flex justify-content-center align-items-center gap-2 text-center" style="color: #F0F8FF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 1024 1024"><path fill="currentColor" d="M955 768q-20 34-58 44.5t-72.5-9.5t-45-58.5T789 672q61-106 68-226.5T817.5 216T680 29q47 16 88 40q90 52 152 134.5t87 176t12.5 196T955 768zM768 955q-90 52-192.5 64.5t-196-12.5t-176-87T69 768q-20-34-10-72.5t44.5-58.5t73-9.5T235 672q46 80 116 138t151 86.5t170.5 31T846 899q-37 33-78 56zM512 192q-123 0-230.5 54.5T103 395.5T9 608q-9-49-9-96q0-104 40.5-199t109-163.5T313 40.5T512 0q40 0 68 28t28 68t-28 68t-68 28z"/></svg>
+              <div>Campain Leads</div>
+            </a>
+          </li>
+
+          {% comment %}Employees{% endcomment %}
+          <li class="w-75 my-3">
+            <a href="/employee" class="d-flex justify-content-center align-items-center gap-2 text-center" style="color: #F0F8FF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32"><path fill="currentColor" d="M28.523 23.813c-.518-.51-6.795-2.938-7.934-3.396c-1.133-.45-1.585-1.697-1.585-1.697s-.51.282-.51-.51c0-.793.51.51 1.02-2.548c0 0 1.415-.397 1.134-3.68h-.34s.85-3.51 0-4.698c-.853-1.188-1.187-1.98-3.06-2.548c-1.87-.567-1.19-.454-2.548-.396c-1.36.057-2.492.793-2.492 1.188c0 0-.85.057-1.188.397c-.34.34-.906 1.924-.906 2.32s.283 3.06.566 3.624l-.337.11c-.283 3.284 1.132 3.682 1.132 3.682c.51 3.058 1.02 1.755 1.02 2.548c0 .792-.51.51-.51.51s-.453 1.246-1.585 1.697c-1.132.453-7.416 2.887-7.927 3.396c-.51.52-.453 2.896-.453 2.896h26.954s.063-2.378-.453-2.897zm-6.335 2.25h-4.562v-1.25h4.562v1.25z"/></svg>
+              <div>Employees</div>
+            </a>
+          </li>
+
+          {% comment %}Assign{% endcomment %}
+          <li class="w-75 my-3">
+            <a href="{% url 'assign' %}" class="d-flex justify-content-center align-items-center gap-2 text-center" style="color: #F0F8FF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.442q.325 0 .537-.212t.213-.538q0-.325-.213-.537T12 2.942q-.325 0-.537.213t-.213.537q0 .325.213.538t.537.212Zm6 17.673q-1.671 0-2.836-1.164T14 18.115q0-1.67 1.164-2.835T18 14.115q1.671 0 2.836 1.165T22 18.115q0 1.672-1.164 2.836Q19.67 22.115 18 22.115ZM17.615 21h.77v-2.5h2.5v-.77h-2.5v-2.5h-.77v2.5h-2.5v.77h2.5V21ZM7.5 8.73h9v-1h-9v1ZM11.521 20H5.615q-.666 0-1.14-.475Q4 19.051 4 18.385V5.615q0-.666.475-1.14Q4.949 4 5.615 4h4.7q-.136-.765.367-1.383Q11.185 2 12.01 2t1.328.617q.502.618.347 1.383h4.7q.666 0 1.14.475q.475.474.475 1.14v5.95q-.494-.157-.991-.246q-.497-.088-1.009-.088q-.506 0-.984.08t-.94.226V11.5H7.5v1h6.587q-.758.521-1.332 1.223q-.574.702-.945 1.546H7.5v1h3.96q-.108.423-.169.853q-.06.43-.06.878q0 .46.054 1.009q.053.549.236.991Z"/></svg>
+              <div>Assign Duty</div>
+            </a>
+          </li>
+
+          {% comment %}Follow Ups{% endcomment %}
+          <li class="w-75 my-3">
+            <a href="{% url 'followup' %}" class="d-flex justify-content-center align-items-center gap-2 text-center" style="color: #F0F8FF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48"><g fill="none" stroke="#F0F8FF" stroke-linecap="round" stroke-width="4"><path stroke-linejoin="round" d="M6 5V30.0036H42V5"/><path stroke-linejoin="round" d="M30 37L24 43L18 37"/><path stroke-linejoin="round" d="M24 30V43"/><path stroke-linejoin="round" d="M27.9887 10.9785L33 16L27.9887 21.0902"/><path d="M15.0009 16.001H33"/></g></svg>
+              <div>Follow Ups</div>
+            </a>
+          </li>
+
+          {% comment %}Leads Won{% endcomment %}
+          <li class="w-75 my-3">
+            <a href="/leads_won" class="d-flex justify-content-center align-items-center gap-2 text-center" style="color: #F0F8FF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M7.775 17.688a.58.58 0 0 0-.782.078a.54.54 0 0 0 0 .712c1.79 1.425 3.855 1.653 4.898 1.664c1.949.022 4.136-1.01 4.986-1.53c.18-.11.4-.42.16-.774c-.242-.353-.656-.247-.833-.15c-.697.434-2.535 1.303-4.312 1.303a7.23 7.23 0 0 1-4.113-1.3zM7.714 7.286a1.286 1.286 0 1 0 0-2.572a1.286 1.286 0 0 0 0 2.572m8.744-2.506c.252-.12.517-.06.595.072c.143.245.01.4-.075.45l-1.393.683c.381.188 1.185.586 1.354.668c.212.103.268.299.124.506c-.097.141-.378.158-.509.083l-1.728-.857A.44.44 0 0 1 14.572 6a.49.49 0 0 1 .254-.424c.44-.216 1.38-.677 1.632-.798m-5.322 11.129l.985-3.085l1.22 3.155a1.155 1.155 0 0 0 1.476.665a1.12 1.12 0 0 0 .727-.936l1.558-5.689a1.124 1.124 0 0 0-.8-1.388a1.15 1.15 0 0 0-1.402.808l-.684 2.496l-1.014-2.624a1.16 1.16 0 0 0-1.211-.73a1.155 1.155 0 0 0-1.158.8l-.872 2.728l-.873-2.728a1.154 1.154 0 0 0-1.824-.54a1.12 1.12 0 0 0-.352 1.208l1.874 5.86a1.155 1.155 0 0 0 1.174.798a1.155 1.155 0 0 0 1.176-.798"/></svg>
+              <div>Leads Won</div>
+            </a>
+          </li>
+
+          {% comment %}Courses{% endcomment %}
+          <li class="w-75 my-3">
+            <a href="{% url 'course' %}" class="d-flex justify-content-center align-items-center gap-2 text-center" style="color: #F0F8FF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
+                <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
+              </svg>
+              <div>Courses</div>
+            </a>
+          </li>
+
+          {% comment %}Payments{% endcomment %}
+          <li class="w-75 my-3">
+            <a href="{% url 'payments' %}" class="d-flex justify-content-center align-items-center gap-2 text-center" style="color: #F0F8FF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8.62 1.59L3.6.51a.49.49 0 0 0-.6.37L1.64 7.29L.63 12a.49.49 0 0 0 .37.58l1.2.26a.49.49 0 0 0 .58-.38l1-4.68l3.44.74a3.52 3.52 0 0 0 4.26-3.43a3.59 3.59 0 0 0-2.86-3.5ZM7.26 6.25l-3-.65l.55-2.6l3 .65a1.32 1.32 0 0 1-.56 2.58Z"/><path d="m5.16 13.5l.62-2.9l3 .63c2.24.49 4.6-1.86 4.63-4.29a3.62 3.62 0 0 0-.2-1.19"/></g></svg>
+              <div>Payments</div>
+            </a>
+          </li>
+
+          {% comment %}Callbacks{% endcomment %}
+          <li class="w-75 my-3">
+            <a href="{% url 'callbacks' %}" class="d-flex justify-content-center align-items-center gap-2 text-center" style="color: #F0F8FF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke="#fff" d="M25 14.583A10.417 10.417 0 0 1 35.417 25m-12.5-18.625A17 17 0 0 1 25 6.25A18.75 18.75 0 0 1 43.75 25q0 1.045-.125 2.083"/><path stroke="#F0F8FF" d="M31.25 43.75a27.5 27.5 0 0 1-9.042-3.98L26 34.334a4.167 4.167 0 0 1 5.583-1.062c.688.437 1.396.833 2.084 1.229a4.167 4.167 0 0 1 1.75 5.875l-1.292 1.98a2.44 2.44 0 0 1-2.875 1.395M7.646 15.98l2.083-1.293a4.167 4.167 0 0 1 5.938 1.521c.396.75.791 1.459 1.229 2.084a4.167 4.167 0 0 1-1.063 5.583l-5.541 3.854A27.5 27.5 0 0 1 6.25 18.75a2.44 2.44 0 0 1 1.396-2.77"/><path stroke="#F0F8FF" d="M10.292 27.73a37 37 0 0 0 5.375 6.603a37 37 0 0 0 6.604 5.375"/></g></svg>
+              <div>CallBack</div>
+            </a>
+          </li>
+
+          {% comment %}Not Answered Leads{% endcomment %}
+          <li class="w-75 my-3 mx-2 ">
+            <a href="{% url 'not_answered' %}" class="d-flex justify-content-center align-items-center gap-2 text-center" style="color: #F0F8FF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M22.414 3L11.833 13.58c.508.441 1.049.846 1.617 1.211l1.86-1.859L22 14.42V23h-1a19.91 19.91 0 0 1-10.85-3.197a20.085 20.085 0 0 1-2.567-1.971L3 22.414L1.586 21L21 1.586L22.414 3ZM9 16.415a18.069 18.069 0 0 0 2.237 1.71A17.892 17.892 0 0 0 20 20.972v-4.949l-4.053-.9l-2.174 2.175l-.663-.377A16.038 16.038 0 0 1 10.415 15L9 16.415ZM1 2h8.58l1.487 6.69l-1.865 1.866l.297.504l-1.723 1.015l-1.084-1.839l2.184-2.183L7.976 4H3.027a17.893 17.893 0 0 0 3.097 9.138l.564.825l-1.652 1.128l-.564-.825A19.911 19.911 0 0 1 1 3V2Z"/></svg>
+              <div>Not Answered Leads</div>
+            </a>
+          </li>
+
+          {% comment %}Reports{% endcomment %}
+          <li class="w-75 my-3">
+            <a href="{% url 'reports' %}" class="d-flex justify-content-center align-items-center gap-2 text-center" style="color: #F0F8FF;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 897 1024"><path fill="currentColor" d="M832.27 1024h-768q-26 0-45-18.5T.27 960V65q0-27 19-45.5t45-18.5h448v352q0 13 9.5 22.5t22.5 9.5h352v575q0 27-18.5 45.5t-45.5 18.5zm-96-192h-32V608q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v224h-64V480q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v352h-64V672q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v160h-32q-13 0-22.5 9.5t-9.5 22.5t9.5 22.5t22.5 9.5h576q14 0 23-9.5t9-22.5t-9.5-22.5t-22.5-9.5zm-160-832q26 0 44 18l257 257q19 19 19 46h-320V0z"/></svg>
+              <div>Reports</div>
+            </a>
+          </li>
+        </ul>
+
+        {% comment %}Trash{% endcomment %}
+        <div class="w-75 my-2">
+          <a href="{% url 'trash' %}" class="d-flex flex-row justify-content-center align-items-center gap-2 " style="color: #e5383b;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><path fill="currentColor" d="M11 3h5v1H0V3h5V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1zm-7.056 8H7v1H4.1l.392 2.519c.042.269.254.458.493.458h6.03c.239 0 .451-.189.493-.458l1.498-9.576H14l-1.504 9.73c-.116.747-.74 1.304-1.481 1.304h-6.03c-.741 0-1.365-.557-1.481-1.304l-1.511-9.73H9V5.95H3.157L3.476 8H8v1H3.632zM6 3h4V1H6z"/></svg>
+            <span>Trash</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+  </body>
+</html>

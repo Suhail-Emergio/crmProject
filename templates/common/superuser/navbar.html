@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .search-container {
+        width: 100%;
+        max-width: 500px;
+        position: relative;
+      }
+      .search-input {
+        width: 100%;
+        padding: 10px 20px;
+        padding-right: 50px;
+        font-size: 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 30px;
+        outline: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .search-input:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 2px 10px rgba(74, 144, 226, 0.2);
+      }
+      .search-icon {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #757575;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      .search-input:focus + .search-icon {
+        color: #4a90e2;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="false">
+      <div class="container-fluid py-1 px-3">
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Start typing to search..." id="search-input" onkeyup="search()" />
+          <span class="search-icon">&#128269;</span>
+        </div>
+        <ul class="navbar-nav justify-content-end">
+          <li class="nav-item d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
+              <i class="fa fa-user me-sm-1"></i>
+              <span class="d-sm-inline d-none text-capitalize">{{ user.name }}</span>
+            </a>
+          </li>
+          <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+              <div class="sidenav-toggler-inner">
+                <i class="sidenav-toggler-line bg-white"></i>
+                <i class="sidenav-toggler-line bg-white"></i>
+                <i class="sidenav-toggler-line bg-white"></i>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item px-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white p-0"><i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </body>
+</html>

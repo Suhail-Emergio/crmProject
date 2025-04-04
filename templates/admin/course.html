@@ -1,0 +1,119 @@
+{% extends 'common/admin/common.html' %}
+{% block content %}
+  <div class="card" style="margin: 3rem 2rem;">
+    <div class="d-flex justify-content-between px-3 align-items-center" style="height: 7em;">
+      <div>
+        <h3 class="card-title fw-bold text-black mb-0">Courses</h3>
+      </div>
+      <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary bd-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
+          <defs>
+            <mask id="letsIconsAddRingDuotoneLine0">
+              <g fill="none" stroke-width="1.2">
+                <circle cx="12" cy="12" r="8.4" stroke="#fff" stroke-opacity=".75" />
+                <path stroke="#fff" stroke-linecap="square" d="M12 15V9m3 3H9" />
+              </g>
+            </mask>
+          </defs>
+          <path fill="#fff" d="M0 0h24v24H0z" mask="url(#letsIconsAddRingDuotoneLine0)" />
+        </svg>
+      </button>
+    </div>
+    {% if courses %}
+      <div class="table-responsive text-nowrap">
+        <table class="table table-striped">
+          <thead class="text-center">
+            <tr>
+              <th>Name</th>
+              <th>Course</th>
+              <th>Internship</th>
+              <th>Rate</th>
+              <th>Syllabus</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0 text-center leads-list">
+            {% for i in courses %}
+              <tr class="lead">
+                <td>
+                  <h5 style="font-size:12pt;margin-top:0.6em">{{ i.name }}</h5>
+                </td>
+                <td>
+                  <h6>{{ i.duration }}</h6>
+                </td>
+                <td>{{ i.internship }}</td>
+                <td>
+                  Course Rate : {{ i.rate }}<br />GST : {{ i.gst }} %<br />Total Fee : {{ i.total_rate }}
+                </td>
+                <td>
+                  <a href="{{ i.syllabus.url }}" target="_blank">{{ i.syllabus }}</a>
+                </td>
+
+                <td>
+                  <a href="{% url 'edit_course' i.id %}" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dee2e6" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                    </svg>
+                  </a>
+                  <a href="{% url 'del_course' i.id %}" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dee2e6" class="bi bi-trash" viewBox="0 0 16 16">
+                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+        <h4>No Courses</h4>
+      </div>
+    {% endif %}
+  </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Course</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-floating mt-2">
+              <input type="text" class="form-control" id="number" placeholder="" name="name" aria-describedby="floatingInputHelp" required />
+              <label for="floatingInput">Name</label>
+            </div>
+            <div class="form-floating mt-2">
+              <input type="text" class="form-control" id="floatingInput" placeholder="" name="course" aria-describedby="floatingInputHelp" required />
+              <label for="floatingInput">Course Duration</label>
+            </div>
+            <div class="form-floating mt-2">
+              <input type="text" class="form-control" id="floatingInput" placeholder="" name="internship" aria-describedby="floatingInputHelp" required />
+              <label for="floatingInput">Internship Duration</label>
+            </div>
+            <div class="form-floating mt-2">
+              <input type="text" class="form-control" id="floatingInput" placeholder="" name="rate" aria-describedby="floatingInputHelp" required />
+              <label for="floatingInput">Base Rate</label>
+            </div>
+            <div class="form-floating mt-2">
+              <input type="text" class="form-control" id="floatingInput" placeholder="" name="gst" aria-describedby="floatingInputHelp" required />
+              <label for="floatingInput">GST</label>
+            </div>
+            <div class="form-floating mt-2">
+              <input type="file" class="form-control" id="floatingInput" placeholder="" name="syllabus" accept=".pdf" aria-describedby="floatingInputHelp" />
+              <label for="floatingInput">Syllabus</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-4">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

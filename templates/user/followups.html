@@ -1,0 +1,114 @@
+{% extends 'common/user/common.html' %}
+{% load static %}
+{% block content %}
+  <div class="container d-flex justify-content-between" style="margin-top:1.5em">
+    <h2 style="color: #2b2d42; margin-bottom: 1em;font-weight:600;">Follow Ups</h2>
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Start typing to search..." id="search-input" onkeyup="search()" />
+      <span class="search-icon" style="margin-top: -0.7em;">&#128269;</span>
+    </div>
+    <a href="total_follow"><button class="btn btn-primary">Total Follows</button></a>
+  </div>
+  <div class="container-lg overflow-auto">
+    <table class="table text-center table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Sl no</th>
+          <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Name</th>
+          <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Phone No</th>
+          <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Status</th>
+          <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Course</th>
+          <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Note</th>
+          <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Lead Status</th>
+        </tr>
+      </thead>
+      <tbody class="leads-list">
+        {% if duty %}
+          {% for i in duty %}
+            <tr class="lead">
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>
+                <h5>{{ i.lead.name }}</h5>
+              </td>
+              <td>
+                <h6>{{ i.lead.phone }}</h6>
+              </td>
+              <td>{{ i.status }} : {{ i.progress }}</td>
+              <td>{{ i.course }}</td>
+              <td>{{ i.notes }}</td>
+              <td class="d-flex justify-content-center align-items-center">
+                <a class="p-3 btn d-flex justify-content-center align-items-center" href="{% url 'status' i.lead.id %}" style="width: auto; height: 30px; background-color:#006d77; color: white; border-radius: 5px;">view</a>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td></td>
+            <td></td>
+            <td>No followups yet</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <script>
+    const search = () => {
+      const searchInput = document.getElementById('search-input').value.toUpperCase()
+      console.log(searchInput)
+      const items = document.getElementsByClassName('leads-list')
+      const product = document.querySelectorAll('.lead')
+      const names = document.getElementsByTagName('h5')
+      const numbers = document.getElementsByTagName('h6')
+      if (!isNaN(searchInput)) {
+        for (let i = 0; i < numbers.length; i++) {
+          let match = product[i].getElementsByTagName('h6')[0]
+          if (match) {
+            let tvalue = match.textContent || match.innerHTML
+            if (tvalue.toUpperCase().indexOf(searchInput) > -1) {
+              product[i].style.display = ''
+            } else {
+              product[i].style.display = 'none'
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < names.length; i++) {
+          let match = product[i].getElementsByTagName('h5')[0]
+          if (match) {
+            let tvalue = match.textContent || match.innerHTML
+            if (tvalue.toUpperCase().indexOf(searchInput) > -1) {
+              product[i].style.display = ''
+            } else {
+              product[i].style.display = 'none'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  {% if duty.has_other_pages %}
+  <ul class="pagination">
+    {% if duty.has_previous %}
+      <li><a href="?page={{ duty.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in duty.paginator.page_range %}
+      {% if duty.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if duty.has_next %}
+      <li><a href="?page={{ duty.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% endblock %}

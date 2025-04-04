@@ -1,0 +1,58 @@
+{% extends 'common/admin/common.html' %}
+{% block content %}
+<div class="card" style="margin: 3rem 2rem;">
+        <h5 class="card-header">Edit Leads</h5>
+        <form method="post" style="margin: 0 2rem 2rem 2rem;">
+        {% csrf_token %}
+              <div class="form-floating">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="name"
+                          aria-describedby="floatingInputHelp"
+                          value="{{lead.user.name}}"
+                        />
+                        <label for="floatingInput">Name</label>
+              </div>
+              <div class="form-floating mt-2">
+                        <input
+                          type="tel"
+                          pattern="[0-9]{10}"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="number"
+                          aria-describedby="floatingInputHelp"
+                          value="{{lead.user.phone}}"
+                        />
+                        <label for="floatingInput">Phone Number</label>
+              </div>
+              <div class="form-floating mt-2">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="password"
+                          aria-describedby="floatingInputHelp"
+                        />
+                        <label for="floatingInput">Password</label>
+              </div>
+              <div class="form-floating mt-2">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          name="strength"
+                          aria-describedby="floatingInputHelp"
+                          value="{{lead.strength}}"
+                        />
+                        <label for="floatingInput">Strength</label>
+              </div>
+              <button type="submit" class="btn btn-primary mt-4">Edit</button>
+          </form>
+</div>
+{% endblock %}

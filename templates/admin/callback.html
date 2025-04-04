@@ -1,0 +1,83 @@
+{% extends 'common/admin/common.html' %}
+{% block content %}
+  <div class="card" style="margin: 3rem 2rem;">
+    <div class="d-flex justify-content-between px-3 align-items-center" style="height: 7em;">
+      <h3 class="card-title fw-bold text-black mb-0">Callback</h3>
+    </div>
+    {% if calls %}
+      <div class="table-responsive text-nowrap">
+        <table class="table text-center table-striped">
+          <thead>
+            <tr>
+              <th>Sr</th>
+              <th>Lead</th>
+              <th>Sale Person</th>
+              <th>Date Of Callback</th>
+              <th>Lead Status</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0 leads-list">
+            {% for i in calls %}
+              <tr class="call" data-date="{{ i.date|date:'Y-m-d' }}">
+                <td scope="row">{{ forloop.counter }}</td>
+                <td>
+                  <h6>{{ i.duty.lead.phone }}</h6>
+                </td>
+                <td>
+                  <h5>{{ i.duty.lead }}</h5>
+                </td>
+                <td class="date-cell">{{ i.date }}</td>
+                <td class="date-cell"> <a href="{% url 'lead_status' i.duty.lead.id %}"><span class="badge bg-label-primary me-1">Lead Status</span></a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const today = new Date()
+          today.setHours(0, 0, 0, 0) // Set time to beginning of the day
+        
+          const calls = document.querySelectorAll('.call')
+          calls.forEach((call) => {
+            const dateStr = call.getAttribute('data-date')
+            const callDate = new Date(dateStr)
+            callDate.setHours(0, 0, 0, 0) // Set time to beginning of the day
+        
+            if (callDate.getTime() === today.getTime()) {
+              call.classList.add('table-danger')
+              const dateCell = call.querySelector('.date-cell')
+              dateCell.innerHTML += ' <span class="badge bg-primary">Today</span>'
+            }
+          })
+        })
+      </script>
+    {% else %}
+      <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+        <h4>No Callbacks</h4>
+      </div>
+    {% endif %}
+  </div>
+
+  {% if calls.has_other_pages %}
+  <ul class="pagination">
+    {% if calls.has_previous %}
+      <li><a href="?page={{ calls.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in calls.paginator.page_range %}
+      {% if calls.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if calls.has_next %}
+      <li><a href="?page={{ calls.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% endblock %}

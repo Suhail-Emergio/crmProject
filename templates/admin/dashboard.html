@@ -1,0 +1,196 @@
+{% extends 'common/admin/common.html' %}
+{% block content %}
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+      <div class="col-lg-6 mb-4 order-0">
+        <div class="card">
+          <div class="d-flex align-items-end row">
+            <div class="col-sm-12">
+              <div class="card-body">
+                <h5 class="card-title mt-2 text-primary" style="font-size:20pt">Leads Won</h5>
+                <script type="text/javascript">
+                  {% comment %} Chart Data {% endcomment %}
+                    window.onload = function () {
+                      var monthNames = [
+                                  "January", "February", "March", "April", "May", "June",
+                                  "July", "August", "September", "October", "November", "December"
+                            ];
+                          var chart = new CanvasJS.Chart("chartContainer",
+                          {
+                            axisY: {
+                              title: 'Sales',
+                              valueFormatString: '#,###',
+                              suffix: '',
+                              minimum: 0,
+                              gridThickness: 0
+                            },
+                            data: [
+                            {
+                              type: "bar",
+                              dataPoints: [
+                              {% for i in won %}
+                              { y: {{i.count}}, label: monthNames[{{i.month}} - 1]},
+                              {% endfor %}
+                              ]
+                            }
+                            ]
+                          });
+
+                      chart.render();
+                    }
+                            </script>
+                <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12 col-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title text-primary mt-2" style="font-size:20pt">Call Backs</h5>
+            <div class="table-responsive text-nowrap">
+              <table class="table table-borderless">
+                <tbody style="text-align: left">
+                  {% for i in callback %}
+                    <tr>
+                      <td>
+                        <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ i.date }}</strong>
+                      </td>
+                      <td>
+                        <i class="fab fa-angular fa-lg text-danger me-3"></i> {{ i.duty.lead }}
+                      </td>
+                      <td>
+                        <i class="fab fa-angular fa-lg text-danger me-3"></i> {{ i.duty.emp }}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 mb-4 order-0">
+          <div class="card">
+            <div class="d-flex align-items-end row">
+              <div class="col-sm-12">
+                <div class="card-body">
+                  <h5 class="card-title mt-2 text-primary" style="font-size:20pt">Leads</h5>
+
+                  <div class="table-responsive text-nowrap">
+                    <table class="table table-borderless">
+                      <tbody style="text-align: left">
+                        {% for i in lead %}
+                          <tr>
+                            <td>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                              </svg>
+                            </td>
+                            <td>
+                              <i class="fab fa-angular fa-lg text-danger me-3"></i>
+                              <strong>{{ i.name }}</strong>
+                            </td>
+                            <td>{{ i.phone }}</td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12 col-6 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-primary mt-2" style="font-size:20pt">Sales Person</h5>
+              <div class="table-responsive text-nowrap">
+                <table class="table table-borderless">
+                  <tbody style="text-align: left">
+                    {% for i in sale %}
+                      <tr>
+                        <td>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                          </svg>
+                          <i class="fab fa-angular fa-lg text-danger me-3"></i>
+                          <strong>{{ i.user.name }}</strong>
+                        </td>
+                        <td>
+                          <strong>{{ i.target }}</strong>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 mb-4 order-0">
+          <div class="card">
+            <div class="d-flex align-items-end row">
+              <div class="col-sm-12">
+                <div class="card-body">
+                  <h5 class="card-title mt-2 text-primary" style="font-size:20pt">Payments</h5>
+                  <div class="table-responsive text-nowrap">
+                    <table class="table table-borderless">
+                      <tbody style="text-align: left">
+                        {% for i in payment %}
+                          <tr>
+                            <td>
+                              <i class="fab fa-angular fa-lg text-danger me-3"></i>
+                              {{ i.lead.name }}
+                            </td>
+                            <td>
+                              <i class="fab fa-angular fa-lg text-danger me-3"></i>
+                              <strong>{{ i.rate }}</strong>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-12 col-6 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-primary mt-2" style="font-size:20pt">Courses</h5>
+              <div class="table-responsive text-nowrap">
+                <table class="table table-borderless">
+                  <tbody style="text-align: left">
+                    {% for i in course %}
+                      <tr>
+                        <td>
+                          <i class="fab fa-angular fa-lg text-danger me-3"></i>
+                          <strong>{{ i.name }}</strong>
+                        </td>
+                        <td>
+                          <i class="fab fa-angular fa-lg text-danger me-3"></i> {{ i.total_rate }}
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

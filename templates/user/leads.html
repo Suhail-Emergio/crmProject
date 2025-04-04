@@ -1,0 +1,127 @@
+{% extends 'common/user/common.html' %}
+{% load static %}
+{% block content %}
+<div class="container d-flex justify-content-between" id="container_lead" style="margin-top:1.5em">
+    <h2 style="color: #495057; margin-bottom: 1em;font-weight:600;">Leads</h2>
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Start typing to search..." id="search-input" onkeyup="search()" />
+        <span class="search-icon" style="margin-top: -0.7em;">&#128269;</span>
+      </div>
+        <button type="button" data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                class="btn btn-primary" style="height:3em;width:15em">
+            <svg style="margin-top:-0.2em" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                 class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+            </svg>&nbsp;Add Reference
+        </button>
+</div>
+{% if duty %}
+<div class="container-lg mt-2 overflow-auto ">
+    <table class="table text-center table-bordered ">
+        <thead>
+        <tr>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Sl no</th>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Name</th>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Phone No</th>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Email</th>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Department</th>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Lead Status</th>
+        </tr>
+        </thead>
+        <tbody class="leads-list">
+        {% for i in duty %}
+        <tr class="lead">
+            <th scope="row">{{forloop.counter}}</th>
+            <td><h5>{{i.lead.name}}</h5></td>
+            <td><h6 style="font-weight:600;">{{i.lead.phone}}</h6></td>
+            <td>{{i.lead.email}}</td>
+            <td>{{i.lead.department}}</td>
+            <td class="d-flex justify-content-center align-items-center"><a class="p-3 btn d-flex justify-content-center align-items-center " href="{% url 'status' i.lead.id %}"
+                style="width: auto; height: 30px; background-color:#006d77; color: white; border-radius: 5px;">
+                    View
+            </a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+      <h4>No Leads</h4>
+    </div>
+    {% endif %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Reference</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="form-floating mt-2">
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                name="name"
+                                aria-describedby="floatingInputHelp"
+                                required
+                        />
+                        <label for="floatingInput">Name</label>
+                    </div>
+                    <div class="form-floating mt-2">
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput"
+                                placeholder=""
+                                pattern="[0-9]{10}"
+                                name="number"
+                                aria-describedby="floatingInputHelp"
+                                required
+                        />
+                        <label for="floatingInput">Number</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-4">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if duty.has_other_pages %}
+  <ul class="pagination">
+    {% if duty.has_previous %}
+      <li><a href="?page={{ duty.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in duty.paginator.page_range %}
+      {% if duty.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if duty.has_next %}
+      <li><a href="?page={{ duty.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+<script>
+    {% for message in messages %}
+    alert("{{ message }}");
+    {% endfor %}
+</script>
+{% endblock %}

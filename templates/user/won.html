@@ -1,0 +1,86 @@
+{% extends 'common/user/common.html' %}
+{% load static %}
+{% block content %}
+  <div class="container d-flex justify-content-between" style="margin-top:1.5em">
+    <h2 style="color: #2b2d42; margin-bottom: 1em;font-weight:600;width:100%">Leads Won</h2>
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Start typing to search..." id="search-input" onkeyup="search()" />
+      <span class="search-icon" style="margin-top: -0.7em;">&#128269;</span>
+    </div>
+  </div>
+  {% if duty %}
+    <div class="container-lg overflow-auto">
+      <table class="table text-center table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Sl no</th>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Name</th>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Phone No</th>
+            <th scope="col" class="p-4" style=" background-color: #006d77;color:#edede9;">Course</th>
+            <th scope="col" class="p-4" style="background-color: #006d77;color:#edede9;">Mode Of Training</th>
+            <th scope="col" class="p-4" style="background-color: #006d77;color:#edede9;">Lead Status</th>
+          </tr>
+        </thead>
+        <tbody class="leads-list">
+          {% for i in duty %}
+            <tr class="lead">
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>
+                <h5>{{ i.lead.name }}</h5>
+              </td>
+              <td>
+                <h6>{{ i.lead.phone }}</h6>
+              </td>
+              <td>{{ i.course }}</td>
+              <td>
+                {{ i.mode }}<br />{{ i.type }}
+              </td>
+              <td>
+                <a class="btn btn-primary" href="{% url 'status' i.lead.id %}" >view</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
+      <h4>No Leads Won yet</h4>
+    </div>
+  {% endif %}
+  <script>
+    const search = () => {
+      const searchInput = document.getElementById('search-input').value.toUpperCase()
+      console.log(searchInput)
+      const items = document.getElementsByClassName('leads-list')
+      const product = document.querySelectorAll('.lead')
+      const names = document.getElementsByTagName('h5')
+      const numbers = document.getElementsByTagName('h6')
+      if (!isNaN(searchInput)) {
+        for (let i = 0; i < numbers.length; i++) {
+          let match = product[i].getElementsByTagName('h6')[0]
+          if (match) {
+            let tvalue = match.textContent || match.innerHTML
+            if (tvalue.toUpperCase().indexOf(searchInput) > -1) {
+              product[i].style.display = ''
+            } else {
+              product[i].style.display = 'none'
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < names.length; i++) {
+          let match = product[i].getElementsByTagName('h5')[0]
+          if (match) {
+            let tvalue = match.textContent || match.innerHTML
+            if (tvalue.toUpperCase().indexOf(searchInput) > -1) {
+              product[i].style.display = ''
+            } else {
+              product[i].style.display = 'none'
+            }
+          }
+        }
+      }
+    }
+  </script>
+{% endblock %}

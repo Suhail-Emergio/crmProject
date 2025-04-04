@@ -1,0 +1,45 @@
+{% extends 'user/common.html' %}
+{% load static %}
+{% block content %}
+<div class="container d-flex justify-content-between" id="container_lead" style="margin-top:6em">
+    <h2 style="color: #3d5a80; margin-bottom: 1em;font-weight:600;">Reports</h2>
+</div>
+<div class="container-lg overflow-auto ">
+    <table class="table table-bordered ">
+        <thead>
+            <tr>
+                <th scope="col" class="p-4" style=" background-color: #52796f;color:#edede9;">Sl no</th>
+                <th scope="col" class="p-4" style=" background-color: #52796f;color:#edede9;">Date</th>
+                <th scope="col" class="p-4" style=" background-color: #52796f;color:#edede9;">Calls Made</th>
+                <th scope="col" class="p-4" style=" background-color: #52796f;color:#edede9;">Follow ups</th>
+                <th scope="col" class="p-4" style=" background-color: #52796f;color:#edede9;">Not Answered</th>
+                <th scope="col" class="p-4" style=" background-color: #52796f;color:#edede9;">Not Interested</th>
+            </tr>
+        </thead>
+        <tbody class="leads-list">
+            {% if duty %}
+            {% for i in duty %}
+            <tr class="lead">
+                <th scope="row">{{forloop.counter}}</th>
+                <td>
+                    <h5>{{i.lead.name}}</h5>
+                </td>
+                <td>
+                    <h6 style="font-weight:600;">{{i.lead.number}}</h6>
+                </td>
+                <td>{{i.lead.email}}</td>
+                <td>{{i.lead.department}}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td>No reports yet ...</td>
+                <td></td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

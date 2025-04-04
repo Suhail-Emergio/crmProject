@@ -1,0 +1,255 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+.nav-item a:hover {
+    background-color: #277da1;
+    border-radius: 5px;
+    color: white;   
+}
+.nav-item{
+    margin-left: 20px;
+}
+.nav-item>a{
+    font-size: 13pt;
+    text-decoration: none;
+}
+/* .container-fluid{
+    background-color: white;
+} */
+.form-control{
+    margin-right: 5%;
+}
+.search{
+    width: 300px;
+    height: 80px;
+    /* background-color: aqua; */
+    margin-right: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-outline{
+    background-color:rgba(136, 137, 250, 1) ;
+    color: white;
+}
+.btn-outline:hover{
+    border: 2px solid rgba(136, 137, 250, 1);
+}
+/* .date{
+    width: 275px;
+    height: 30px;
+    background-color: aquamarine;
+    float: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .5%;
+} */
+.butn{
+    width: 20%; height: 30px; background-color:rgba(127, 65, 189, 1); color: white; border-radius: 5px; display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.footer {
+    
+    bottom: 0;
+    width: 100%;
+    background-color: #f5f5f5;
+    padding: 20px 0;}
+#container_lead{
+    position: relative;
+}
+
+#btn_leads{
+        position: absolute; right: 20px; top: 60px;
+    }
+
+@media screen and (max-width:600px ){
+.date{
+    display: none;
+} 
+.butn{
+    width: 70%;
+   
+} 
+#btn_leads{
+    top: 0;
+}
+}
+.morning{
+
+    color: white;
+}
+.wish{
+    color: white;
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;  
+}
+
+.donut-chart {
+  position: relative;
+	width: 200px;
+  height: 200px;
+	margin: 0 auto 2rem;
+	border-radius: 100%
+ }
+p.center {
+  background: white;
+  position: absolute;
+  text-align: center;
+  font-size: 28px;
+  top:0;left:0;bottom:0;right:0;
+  width: 130px;
+  height: 130px;
+  margin: auto;
+  border-radius: 50%;
+  line-height: 35px;
+  padding: 15% 0 0;
+}
+	
+	
+.portion-block {
+    border-radius: 50%;
+    clip: rect(0px, 200px, 200px, 100px);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+.circle {
+    border-radius: 50%;
+    clip: rect(0px, 100px, 200px, 0px);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    font-family: monospace;
+    font-size: 1.5rem;
+  }
+	
+	
+#part1 {
+    transform: rotate(0deg);
+  }
+
+	#part1 .circle {
+		background-color: #E64C65;
+		/*transform: rotate(76deg);*/
+		animation: first 1s 1 forwards;
+	  }
+	
+	
+#part2 {
+    transform: rotate(100deg);
+  }
+#part2 .circle {
+    background-color: #11A8AB;
+    animation: second 1s 1 forwards 1s;
+  }
+#part3 {
+    transform: rotate(250deg);
+}
+	#part3 .circle {
+		background-color: #4FC4F6;
+		animation: third 0.5s 1 forwards 2s;
+	}
+	
+	
+/* Animation */
+@keyframes first {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(100deg);}
+}
+	
+@keyframes second {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(150deg);}
+}
+	
+@keyframes third {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(111deg);}
+}
+.box1{
+    width: 50%;
+    height: auto;
+    background-color: #E64C65;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.box2{
+    width: 50%;
+    height: auto;
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+/* .leads{
+    width: 80%;
+    height: auto;
+    background-color: #11A8AB;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+} */
+.boxes{
+    width: 200px;
+    height: 200px;
+    background-color: #277da1;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    margin-top: 2%;
+}
+.circle {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .down-arrow {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 15px solid white /* Change color as needed */
+  }
+  
+  @keyframes myfirst {
+    from { top: 0px; top: 0px;}
+  
+    to { bottom: 20spx; top: 20px;}
+  }
+    /* Add styles to the message list */
+ul.messages {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Add styles to individual message items */
+.message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+/* Add styles for different message tags (e.g., error, success, warning) */
+.error {
+    color: #fefae0;
+}
+
