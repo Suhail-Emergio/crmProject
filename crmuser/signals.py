@@ -3,11 +3,10 @@ from django.dispatch import receiver
 from crmAdmin.models import *
 from datetime import datetime
 
-def save_(status, lead, duty, report):
+def save_(status, lead, duty):
     if status == 'Follow Up' or status == 'Won':
         lead.lead_status = True
         lead.save()
-        # report.follow =  report.follow + 1 if status == 'Follow Up' else report.follow
         if Target.objects.filter(sale=duty.emp, date=datetime.now(), type="Daily").exists():
             daily = Target.objects.get(sale=duty.emp, date=datetime.now(), type="Daily")
             daily.target_won += 1
@@ -24,9 +23,6 @@ def save_(status, lead, duty, report):
             trash = TrashLead.objects.create(lead=lead,lost=True)
             trash.save()
         duty.delete()
-    else:
-        report.Notanswer += 1
-    # report.save()
 
 # Update when a lead status is created
 @receiver(post_save, sender=Leadstatus)
@@ -34,15 +30,13 @@ def log_model_save(sender, instance, created, **kwargs):
     if created:
         lead = instance.lead
         duty = Duty.objects.get(lead=lead)
-        report = SaleReport.objects.filter(date=datetime.now(), emp=duty.emp)
-
         if Callback.objects.filter(duty=duty).exists():
             Callback.objects.filter(duty=duty).delete()
 
-        save_(instance.status, lead, duty, report)
+        save_(instance.status, lead, duty)
 
-        lead_statuses = Leadstatus.objects.filter(lead=lead)[:3]
-        all_false = len(lead_statuses) > 0 and all(status.status == "Not Answering" for status in lead_statuses)
+        lead_statuses = Leadstatus.objects.filter(lead=lead).order_by('-id')[:3]
+        all_false = len(lead_statuses) == 3 and all(status.status == "Not Answering" for status in lead_statuses)
         if all_false:
             lead.assign_status = False
             lead.trash =True
