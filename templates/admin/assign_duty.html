@@ -8,50 +8,50 @@
           Count : <span class="fw-bold">{{ count }}</span>
         </p>
       </div>
-      <a href="{% url 'assign_all' %}" class="btn btn-primary bd-flex align-items-center">Assign All</a>
     </div>
     {% if assign %}
-      <div class="table-responsive text-nowrap">
-        <table class="table table-striped">
-          <thead class="text-center">
-            <tr>
-              <th>Lead</th>
-              <th>Number</th>
-              <th>Assign</th>
-            </tr>
-          </thead>
-          <tbody class="table-border-bottom-0 text-center leads-list">
-            {% for i in assign %}
-              <tr class="lead">
-                <td>
-                  <h5 style="font-size:12pt;margin-top:0.6em">{{ i.name }}</h5>
-                </td>
-                <td>
-                  <h6>{{ i.phone }}</h6>
-                </td>
-                <td>
-                  <form action="{% url 'assign_lead' i.id %}" method="post">
-                    {% csrf_token %}
-                    <div class="form-group">
-                      <label for="employeeSelect" class="form-label">Select an Employee</label>
-                      <div class="input-group">
-                        <select class="form-select" id="employeeSelect" name="employee_id" required aria-label="Select an employee">
-                          <option value="" selected disabled>Choose an employee...</option>
-                          {% for employee in emp %}
-                            <option value="{{ employee.id }}">{{ employee.user.name }}</option>
-                          {% endfor %}
-                        </select>
-                      </div>
-                      <div class="form-text">Select an available employee to assign the lead.</div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Assign</button>
-                  </form>
-                </td>
+      <form action="{% url 'assign_lead'  %}" method="post">
+        {% csrf_token %}
+        <div class="table-responsive text-nowrap">
+          <table class="table table-striped">
+            <thead class="text-center">
+              <tr>
+                <th>Select</th>
+                <th>Lead</th>
+                <th>Number</th>
               </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody class="table-border-bottom-0 text-center leads-list">
+              {% for i in assign %}
+                <tr class="lead">
+                  <td>
+                    <input type="checkbox" name="lead_ids" value="{{ i.id }}">
+                  </td>
+                  <td>
+                    <h5 style="font-size:12pt;margin-top:0.6em">{{ i.name }}</h5>
+                  </td>
+                  <td>
+                    <h6>{{ i.phone }}</h6>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="form-group mt-3">
+          <label for="employeeSelect" class="form-label">Select an Employee</label>
+          <div class="input-group">
+            <select class="form-select" id="employeeSelect" name="employee_id" required aria-label="Select an employee">
+              <option value="" selected disabled>Choose an employee...</option>
+              {% for employee in emp %}
+                <option value="{{ employee.id }}">{{ employee.user.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-text">Select an available employee to assign the selected leads.</div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Assign Selected Leads</button>
+      </form>
     {% else %}
       <div style="height: 10em;width: 100%;display: flex;" class="justify-content-center align-items-center">
         <h4>No leads to assign</h4>

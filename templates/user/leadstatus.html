@@ -39,9 +39,11 @@
                 <option value="Got Appointment">Got Appointment</option>
                 <option value="Payment">Payment Received</option>
                 <option value="Not InterestedPayment">Not Interested</option>
+                <option value="Quality">Quality</option>
               </select>
               <div class="form-floating mt-2" id="status"></div>
               <div class="form-floating mt-2" id="callback"></div>
+              <div class="form-floating mt-2" id="quality"></div>
               <div class="form-floating mt-2" id="payment"></div>
               <script>
                 function changestatus() {
@@ -55,12 +57,16 @@
                   } else if (x == 'Payment') {
                     var y = 'Won'
                     var k = 'Won'
-                  } else {
+                  } else if (x == 'Quality') {
+                    var y='Quality'
+                    var p='Quality'
+                  }
+                  else {
                     var y = 'Lost'
                   }
                   document.getElementById('status').innerHTML = '<input class="form-control" aria-describedby="floatingInputHelp" name="status" type="text" value="' + y + '" readonly><label for="floatingInput">Status</label>'
                   if (z == 'Date') {
-                    document.getElementById('callback').innerHTML = '<input type="date" class="form-control" placeholder="" name="date" aria-describedby="floatingInputHelp" required /><label for="floatingInput">Date</label><select name="courses" class="form-select mt-2" id="inputGroupSelect01"><option selected disabled>Course</option>{% for i in course %}<option value="{{i.id}}">{{i.name}}</option>{% endfor %}</select>'
+                    document.getElementById('callback').innerHTML = '<input type="date" class="form-control" placeholder="" name="date" aria-describedby="floatingInputHelp" required /><label for="floatingInput">Date</label><select name="courses" class="form-select mt-2" id="inputGroupSelect01"><option selected disabled>Course</option>{% for i in course %}<option value="{{i.id}}">{{i.name}}</option>{% endfor %}</select><div class=" m-2" ><input class="form-check-input" type="checkbox" id="qualityCheck" name="quality" value="quality"><label for="floatingInput">Quality</label></div>'
                   } else {
                     document.getElementById('callback').innerHTML = ''
                   }
@@ -68,6 +74,11 @@
                     document.getElementById('payment').innerHTML += '<input type="text" class="form-control" id="floatingInput" placeholder="" name="rate" aria-describedby="floatingInputHelp" required/><label for="floatingInput">Advance Rate</label><select name="course" class="form-select mt-2" id="inputGroupSelect01">{% for i in course %}<option value="{{i.id}}">{{i.name}}</option>{% endfor %}</select><select name="mode" class="form-select mt-2" id="inputGroupSelect01"><option selected disabled>Mode of Training</option><option value="Course">Course</option><option value="Internship">Internship</option></select><select name="type" class="form-select mt-2" id="inputGroupSelect01"><option selected disabled>Type of Training</option><option value="Online">Online</option><option value="Offline">Offline</option></select><input type="file" class="form-control mt-2" id="floatingInput" placeholder="" name="ss" accept="image/*" aria-describedby="floatingInputHelp"/><p style="color:red;">Only images accepted</p>'
                   } else {
                     document.getElementById('payment').innerHTML = ''
+                  }
+                  if (p == 'Quality'){
+                    document.getElementById('quality').innerHTML = '<select name="courses" class="form-select mt-2" id="inputGroupSelect01"><option selected disabled>Course</option>{% for i in course %}<option value="{{i.id}}">{{i.name}}</option>{% endfor %}</select><div class=" m-2" ><input class="form-check-input" type="checkbox" id="qualityCheck" name="quality" value="quality"><label for="floatingInput">Quality</label></div>'
+                  } else {
+                    document.getElementById('quality').innerHTML = ''
                   }
                 }
               </script>

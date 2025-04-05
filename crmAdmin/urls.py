@@ -3,7 +3,7 @@ from crmAdmin import views
 
 urlpatterns=[
        # Meta Connection
-       # path("meta/leads", views.facebook_webhook,name="facebook-webhook"),
+       path("meta/leads", views.facebook_webhook,name="facebook-webhook"),
        path("privacy_policy", views.privacy,name="privacy-policy"),
 
        # Dashboard
@@ -29,7 +29,7 @@ urlpatterns=[
        path('duty/<int:id>', views.duty, name='duty'),
        path('del_duty/<int:id>', views.del_duty, name='del_duty'),
        path('assign_duties', views.assign, name="assign"), 
-       path('assign_lead/<int:id>', views.assign_lead, name="assign_lead"),
+       path('assign_lead', views.assign_leads, name="assign_lead"),
        path('assign_all_lead/', views.assign_all_lead, name="assign_all"),
        
        # Courses
@@ -39,6 +39,9 @@ urlpatterns=[
 
        # Followups
        path('followup', views.followup, name='followup'),
+
+       #quality leads
+       path('quality_leads', views.quality_leads, name='quality_leads'),
 
        # Not Answered Leads
        path('not_answered', views.not_answered, name='not_answered'),

@@ -87,19 +87,36 @@
           Count : <span class="fw-bold">{{ count }}</span>
         </p>
       </div>
-      <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary bd-flex align-items-center" data-bs-placement="bottom" title="Add Lead">
-        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
-          <defs>
-            <mask id="letsIconsAddRingDuotoneLine0">
-              <g fill="none" stroke-width="1.2">
-                <circle cx="12" cy="12" r="8.4" stroke="#fff" stroke-opacity=".75" />
-                <path stroke="#fff" stroke-linecap="square" d="M12 15V9m3 3H9" />
-              </g>
-            </mask>
-          </defs>
-          <path fill="#fff" d="M0 0h24v24H0z" mask="url(#letsIconsAddRingDuotoneLine0)" />
-        </svg>
-      </button>
+      <form method="get" class="mb-4">
+        <div class="row align-items-end">
+            <div class="col-md-3">
+                <label for="start_date" class="form-label">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" class="form-control"
+                       value="{{ start_date|date:'Y-m-d' }}">
+            </div>
+            <div class="col-md-3">
+                <label for="end_date" class="form-label">End Date:</label>
+                <input type="date" id="end_date" name="end_date" class="form-control"
+                       value="{{ end_date|date:'Y-m-d' }}">
+            </div>
+            <div class="col-md-3">
+                <label for="status" class="form-label">Lead Status:</label>
+                <select id="status" name="status" class="form-control">
+                    <option value="">All</option>
+                    <option value="Quality" {% if status == "Quality" %}selected{% endif %}>Quality</option>
+                    <option value="Contacted" {% if status == "Total Follow up" %}selected{% endif %}>Total Follow up</option>
+                    <option value="Not Answering" {% if status == "Not Answering" %}selected{% endif %}>Not Answering</option>
+                    <option value="Not interested" {% if status == "Not interest" %}selected{% endif %}>Not Interest</option>
+                    <option value="Invalid number" {% if status == "Invalid number" %}selected{% endif %}>Invalid Number</option>
+                    <option value="Busy" {% if status == "incoming cut" %}selected{% endif %}>Incoming Cut</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">Filter</button>
+            </div>
+        </div>
+    </form>
+    
     </div>
     {% if lead %}
       <div class="table-responsive text-nowrap">
@@ -192,28 +209,6 @@
       </div>
     </div>
   </div>
-
-  {% if lead.has_other_pages %}
-  <ul class="pagination">
-    {% if lead.has_previous %}
-      <li><a href="?page={{ lead.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&laquo;</span></li>
-    {% endif %}
-    {% for i in lead.paginator.page_range %}
-      {% if lead.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-      {% else %}
-        <li><a href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
-    {% if lead.has_next %}
-      <li><a href="?page={{ lead.next_page_number }}">&raquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-{% endif %}
 
   <script>
     function updateFileName(input) {

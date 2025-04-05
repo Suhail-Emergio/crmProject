@@ -19,6 +19,7 @@ class Employee(models.Model):
     strength = models.IntegerField()
     total_lead = models.IntegerField(default=0)
     todays_lead = models.IntegerField(default=0)
+    campain_leads = models.IntegerField(default=0)
 
     def __str__(self):
         return self.user.name
@@ -56,8 +57,10 @@ class Lead(models.Model):
     assign_status = models.BooleanField(default=False)
     lead_status = models.BooleanField(default=False)
     campain = models.BooleanField(default=False)
+    quality = models.BooleanField(default=False)
     closed = models.BooleanField(default=False)
     trash = models.BooleanField(default=False)
+    created_on = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -69,11 +72,14 @@ class Duty(models.Model):
     delete_date = models.DateField()
     created_on = models.DateField(auto_now=True)
 
+    def __str__(self):
+       return self.lead.name
+
 # Lead Status
 class Leadstatus(models.Model):
     lead = models.ForeignKey(Lead,on_delete=models.CASCADE)
-    progress = models.CharField(max_length=100,choices=[('Not Contacted Yet', 'Not Contacted Yet'), ('Not Answering', 'Not Answering'),('Busy', 'Busy'),('Contacted', 'Contacted:Waiting For Reply'),('Got Appointment', 'Got Appointment'),('Payment', 'Payment'),('Not Interested', 'Not Interested')],default='Not Contacted Yet')
-    status = models.CharField(max_length=100,choices=[('Not Answering', 'Not Answering'),('Follow Up', 'Follow Up'), ('Won', 'Won'),('Lost', 'Lost')],default='Not Answering')
+    progress = models.CharField(max_length=100,choices=[('Not Contacted Yet', 'Not Contacted Yet'), ('Not Answering', 'Not Answering'),('Busy', 'Busy'),('Contacted', 'Contacted:Waiting For Reply'),('Got Appointment', 'Got Appointment'),('Payment', 'Payment'),('Not Interested', 'Not Interested'),('Quality','Quality'),('Invalid number','Invalid number')],default='Not Contacted Yet')
+    status = models.CharField(max_length=100,choices=[('Not Answering', 'Not Answering'),('Follow Up', 'Follow Up'), ('Won', 'Won'),('Lost', 'Lost'),('Quality','Quality')],default='Not Answering')
     probability = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
     notes = models.TextField()
@@ -108,7 +114,7 @@ class Report(models.Model):
     csv = models.FileField(upload_to='report')
     created_on = models.DateField(auto_now=True)
 
-    def __str__(self):
+    def _str_(self):
         return f"{self.name} - {self.created_on}"
 
 # Sales Reports
